@@ -32,7 +32,7 @@ const corsOptions: cors.CorsOptions = {
     optionsSuccessStatus: 200,
     credentials: true,
     // preflightContinue: false,
-    origin: ['http://192.168.1.64:3001', 'https://afcon.sbme.ibrahimmohamed.online'],
+    origin: "*",
     methods: ['GET','HEAD','OPTIONS','PUT','PATCH','POST','DELETE'],
 };
 
