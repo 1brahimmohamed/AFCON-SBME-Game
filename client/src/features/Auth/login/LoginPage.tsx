@@ -32,28 +32,37 @@ export default function LoginPage() {
     const submitHandler = async (event: any) => {
         event.preventDefault();
 
+        if (formData.email === '' || formData.password === '') {
+            withReactContent(Swal).fire({
+                text: "Please fill all the fields!",
+                icon: "error",
+                confirmButtonColor: "#fa0505",
+                timer: 1500
+            })
+            return;
+        }
+
         const res = await login(formData);
 
-        if(res){
+        if(res.status === "success"){
             if (
                 signIn({
                     auth: {
-                        token: res.token,
+                        token: res.data.token,
                         type: "bearer",
                     },
-                    userState: res.data.user
+                    userState: res.data.data.user
                 })
             ) {
-    
+
                 // fire swal and redirect
-    
                 withReactContent(Swal).fire({
                     text: "Login Successful!",
                     icon: "success",
                     confirmButtonColor: "#002c1e",
                     timer: 1500
                 })
-    
+
                 setTimeout(() => {
                     navigate('/');
                 }, 2000)
@@ -61,9 +70,9 @@ export default function LoginPage() {
         }
         else{
             withReactContent(Swal).fire({
-                text: "Login Failed!",
+                text: res.message,
                 icon: "error",
-                confirmButtonColor: "#002c1e",
+                confirmButtonColor: "#fa0505",
                 timer: 1500
             })
         }

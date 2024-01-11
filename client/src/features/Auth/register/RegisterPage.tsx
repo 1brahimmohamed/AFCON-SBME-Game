@@ -6,6 +6,16 @@ import { register } from "../../../services/apiAuth";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
+
+const errorAlert = (message: string) => (
+    withReactContent(Swal).fire({
+        text: message,
+        icon: "error",
+        confirmButtonColor: "#fa0505",
+        timer: 2500
+    })
+)
+
 const RegisterPage = () => {
 
     const [formData, setFormData] = useState({
@@ -39,19 +49,20 @@ const RegisterPage = () => {
         // disable form button
 
         if (formData.name === '' || formData.email === '' || formData.password === '' || formData.passwordConfirm === '') {
-            alert('Please fill all fields');
+
+            errorAlert('Please fill all fields')
             return;
         }
 
         // check if passwords match
         if (formData.password !== formData.passwordConfirm) {
-            alert('Passwords do not match');
+            errorAlert('Passwords do not match')
             return;
         }
 
         // check if email is @eng-st
         if (!formData.email.includes('@eng-st')) {
-            alert('Only @eng-st.cu.edu.eg emails are allowed');
+            errorAlert('Only @eng-st.cu.edu.eg emails are allowed')
             return;
         }
 
@@ -59,7 +70,7 @@ const RegisterPage = () => {
 
         console.log(res)
 
-        if (res.data) {
+        if (res.status === "success") {
 
             withReactContent(Swal).fire({
                 text: "Register Successful .. Login Now !",
@@ -74,12 +85,7 @@ const RegisterPage = () => {
 
         }
         else{
-            withReactContent(Swal).fire({
-                text: "Some Thing went wrong .. please try again",
-                icon: "error",
-                confirmButtonColor: "#002c1e",
-                timer: 1500
-            })
+            errorAlert(res.message || 'Something went wrong')
         }
 
     };

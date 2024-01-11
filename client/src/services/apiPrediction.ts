@@ -1,17 +1,25 @@
 import axios from "axios";
 
-const API_URL = "https://www.afcon.sbme.api.ibrahimmohamed.online/api/v1/prediction";
+const API_URL = `${import.meta.env.VITE_BASE_URL}/prediction`;
 
 export const getMatchPrediction = async (matchSlug: string) => {
-    const res = await axios.get(`${API_URL}/match-predictions/${matchSlug}` );
+    try {
+        const res = await axios.get(`${API_URL}/match-predictions/${matchSlug}`);
 
-    if (!res.data) {
-        throw new Error("Failed to fetch prediction");
+        const {data} = res;
+
+
+        return {
+            "status": "success",
+            data
+        }
+
+    } catch (e: any) {
+        return {
+            "status": "error",
+            "message": e.response.data.message,
+        }
     }
-
-    const { data } = res;
-
-    return data;
 };
 
 

@@ -1,5 +1,6 @@
 export default function Example({TableTitle, users}: {TableTitle: string, users: any}) {
 
+
   return (
     <div className="px-4 sm:px-6 lg:px-8 w-full">
       <div className="mt-8 flow-root">
@@ -16,7 +17,7 @@ export default function Example({TableTitle, users}: {TableTitle: string, users:
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {users.map((user: any) => (
-                    <tr key={user.email}>
+                    <tr key={user._id}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                         {user.name}
                       </td>

@@ -1,66 +1,52 @@
-const API_URL = "https://www.afcon.sbme.api.ibrahimmohamed.online/api/v1/auth";
+import axios from "axios";
+
+
+const API_URL = `${import.meta.env.VITE_BASE_URL}/auth`;
 
 export const login = async (formData: any) => {
-    const requestOptions  = {
-        method: 'POST',
-        body: JSON.stringify({
-            email: formData.email,
-            password: formData.password
-        }),
-    };
-
     try {
-        const response : any = await fetch(`${API_URL}/login`, requestOptions);
+        const res = await axios.post(`${API_URL}/login`, {
+            email: formData.email,
+            password: formData.password,
+        });
 
-        if (!response.ok) {
-            console.log(response)
-            return;
+        const {data} = res;
+
+        return {
+            "status": "success",
+            data
         }
 
-        const {data} = await response.json();
-
-        return data.data;
-    }
-    catch (e) {
-        console.log(e)
+    } catch (e: any) {
+        return {
+            "status": "error",
+            "message": e.response.data.message,
+        }
     }
 }
 
 export const register = async (formData: any) => {
 
-    const requestOptions  = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            "Access-Control-Allow-Origin": "*", // allow request from all domains
-            "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-            "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
-            'Accept': '*/*',
-        },
-        body: JSON.stringify({
+    try {
+        const res = await axios.post(`${API_URL}/signup`, {
             name: formData.name,
             email: formData.email,
             password: formData.password,
             passwordConfirm: formData.passwordConfirm,
-            team: formData.country
-        }),
-    };
+            team: formData.country,
+        });
 
+        const {data} = res;
 
-    try {
-        const response : any = await fetch(`${API_URL}/register`, requestOptions);
-
-        if (!response.ok) {
-            console.log(response)
-            return;
+        return {
+            "status": "success",
+             data
         }
 
-        const {data} = response;
-
-        return data.data;
+    } catch (e: any) {
+        return {
+            "status": "error",
+            "message": e.response.data.message,
+        }
     }
-    catch (e) {
-        console.log(e)
-    }
-
 };

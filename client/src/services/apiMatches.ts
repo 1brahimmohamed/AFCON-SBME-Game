@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://www.afcon.sbme.api.ibrahimmohamed.online/api/v1/match";
+const API_URL = `${import.meta.env.VITE_BASE_URL}/match`;
 
 export const getTodayMatches = async () => {
 

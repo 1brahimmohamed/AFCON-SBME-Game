@@ -8,19 +8,20 @@ const MatchPredictions = () => {
 
     const prediction: any = useLoaderData();
 
-    const data = prediction.data
+    const data = prediction.data.data
+
+    const {teamA, teamB, draw, teams} = data
 
     const stats = [
-        {name: data.teams.teamA, value: data.teamA.count, unit: 'votes', label: data.teams.teamA},
-        {name: 'Draw', value: data.draw.count, unit: 'votes', label: 'Draw'},
-        {name: data.teams.teamB, value: data.teamB.count, unit: 'votes', label: data.teams.teamB},
+        {name: teams.teamA, value: teamA.count, unit: 'votes', label: teams.teamA},
+        {name: 'Draw', value: draw.count, unit: 'votes', label: 'Draw'},
+        {name: teams.teamB, value: teamB.count, unit: 'votes', label: teams.teamB},
     ]
-
 
     return (
         <div>
             {
-                prediction.results > 0 ? (
+                prediction.data.results > 0 ? (
                     <>
                         <div className='flex-col space-y-5'>
                             <div className='flex justify-center items-center'>
@@ -31,9 +32,9 @@ const MatchPredictions = () => {
 
                         <div className='mx-auto max-w-7xl'>
                             <div className='grid grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-3'>
-                                <MatchPeople TableTitle={data.teams.teamA} users={data.teamA.users}/>
-                                <MatchPeople TableTitle='Draw' users={data.draw.users}/>
-                                <MatchPeople TableTitle={data.teams.teamB} users={data.teamB.users}/>
+                                <MatchPeople TableTitle={teams.teamA} users={teamA.users}/>
+                                <MatchPeople TableTitle='Draw' users={draw.users}/>
+                                <MatchPeople TableTitle={teams.teamB} users={teamB.users}/>
                             </div>
                         </div>
                     </>
