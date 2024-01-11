@@ -1,9 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
 import { getLeaderboard } from "../../services/apiLeaderboard"
-const people = [
-    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-    // More people...
-]
 
 const Leaderboard = () => {
 
