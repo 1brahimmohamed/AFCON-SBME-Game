@@ -88,8 +88,7 @@ const MatchCard = ({ match }: { match: any }) => {
     }
 
 
-    const matchHasStarted : boolean = match.startTime > new Date().toISOString();
-
+    const matchHasStarted : boolean = match.startTime < new Date(Date.now()).toISOString();
 
 
     return (

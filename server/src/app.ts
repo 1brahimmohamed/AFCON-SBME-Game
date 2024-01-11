@@ -15,15 +15,35 @@ import cookieParser from 'cookie-parser';
 
 const app : express.Application = express();
 
+//options for cors midddleware
+const corsOptions: cors.CorsOptions = {
+    allowedHeaders: [
+        'Origin',
+        'X-Requested-With',
+        'Content-Type',
+        'Accept',
+        'X-Access-Token',
+        'Access-Control-Allow-Origin',
+        'Access-Control-Allow-Headers',
+        'Access-Control-Allow-Credentials'
+    ],
+    optionsSuccessStatus: 200,
+    // credentials: true,
+    // preflightContinue: false,
+    origin: ['http://localhost:5173', 'https://www.afcon.sbme.api.ibrahimmohamed.online'],
+    methods: ['GET','HEAD','OPTIONS','PUT','PATCH','POST','DELETE'],
+};
+
+
+app.use(cors(corsOptions));
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+    console.log(res)
+    next();
+});
 
 // set security HTTP headers
 app.use(helmet());
-app.use(cors({
-    origin: true,
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
-    credentials: true,  // Enable credentials (cookies, authorization headers, etc.)
-}));
-
 
 // limit requests from same IP
 const limiter = rateLimit({
@@ -53,12 +73,14 @@ app.use(xss());
 
 app.use(hpp());
 
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/match", matchRouter);
 app.use("/api/v1/prediction", predictionRouter);
 app.use("/api/v1/game", gameRouter);
 
+app.options('*', cors(corsOptions));
 
 // handle undefined routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
@@ -67,5 +89,6 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
         message: `Can't find ${req.originalUrl} on this server!`
     });
 });
+
 
 export default app;

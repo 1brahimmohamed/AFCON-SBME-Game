@@ -1,18 +1,11 @@
-const API_URL = "http://localhost:3000/api/v1/auth";
+const API_URL = "https://www.afcon.sbme.api.ibrahimmohamed.online/api/v1/auth";
 
 export const login = async (formData: any) => {
     const requestOptions  = {
         method: 'POST',
-        headers: {
-            "Access-Control-Allow-Origin": "*", // allow request from all domains
-            'Content-Type': 'application/json',
-            "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-            'Accept': '*/*',
-            "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
-        },
         body: JSON.stringify({
             email: formData.email,
-            password: formData.password,
+            password: formData.password
         }),
     };
 
@@ -24,7 +17,7 @@ export const login = async (formData: any) => {
             return;
         }
 
-        const {data} = response;
+        const {data} = await response.json();
 
         return data.data;
     }
