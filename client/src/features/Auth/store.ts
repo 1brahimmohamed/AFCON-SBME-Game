@@ -3,7 +3,7 @@ import createStore from 'react-auth-kit/createStore';
 const store: any = createStore({
     authName:'_auth',
     authType:'cookie',
-    cookieDomain: 'localhost',
+    cookieDomain: 'window.location.hostname',
     cookieSecure: false
   });
 

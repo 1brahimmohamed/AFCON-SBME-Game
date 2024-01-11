@@ -13,7 +13,6 @@ const RegisterPage = () => {
         name: '',
         password: '',
         passwordConfirm: '',
-        role: 'user',
         country: 'Egypt'
     });
 
@@ -58,7 +57,9 @@ const RegisterPage = () => {
 
         const res = await register(formData);
 
-        if (res) {
+        console.log(res)
+
+        if (res.data) {
 
             withReactContent(Swal).fire({
                 text: "Register Successful .. Login Now !",
@@ -72,7 +73,7 @@ const RegisterPage = () => {
             }, 2000)
 
         }
-        else{ 
+        else{
             withReactContent(Swal).fire({
                 text: "Some Thing went wrong .. please try again",
                 icon: "error",

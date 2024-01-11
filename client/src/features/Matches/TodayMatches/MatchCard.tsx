@@ -88,10 +88,14 @@ const MatchCard = ({ match }: { match: any }) => {
     }
 
 
+    const matchHasStarted : boolean = match.startTime > new Date().toISOString();
+
+
+
     return (
         <li
-            key={match.email}
-            className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
+            key={match._id}
+            className={`col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow ${matchHasStarted ? 'opacity-50' : ''} `} // opacity-50
         >
             <div className='flex-col'>
                 <div className='flex justify-between p-5 text-left'>
@@ -120,6 +124,7 @@ const MatchCard = ({ match }: { match: any }) => {
                 <div className="-mt-px flex divide-x divide-gray-200">
                     <div className="flex w-0 flex-1">
                         <button
+                            disabled={matchHasStarted}
                             onClick={()=> handlePrediction('Teams')}
                             className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                         >
@@ -129,6 +134,7 @@ const MatchCard = ({ match }: { match: any }) => {
                     </div>
                     <div className="-ml-px flex w-0 flex-1">
                         <button
+                            disabled={matchHasStarted}
                             onClick={()=> handlePrediction('Draw')}
                             className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                         >
