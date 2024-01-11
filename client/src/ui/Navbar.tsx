@@ -103,13 +103,13 @@ const Navbar = () => {
                         </button>
                     </div>
                     <div className="mt-6 flow-root">
-                        <div className="-my-6 divide-y divide-gray-500/25">
+                        <div className="-my-6 divide-y divide-AASecondaryLight">
                             <div className="space-y-2 py-6">
                                 {navigation.map((item) => (
                                     <Link
                                         key={item.name}
                                         to={item.href}
-                                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800"
+                                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-AASecondary"
                                     >
                                         {item.name}
                                     </Link>
@@ -125,8 +125,8 @@ const Navbar = () => {
                                             Logout
                                         </button>
                                     ) : (
-                                        <div 
-                                            className="-mx-3 block space-y-5 rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800"
+                                        <div
+                                            className="-mx-3 block space-y-5 rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white"
                                         >
                                             <div className="hover:text-AASecondary">
                                                 <Link to="/auth/login">
