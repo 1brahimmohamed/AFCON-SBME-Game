@@ -9,24 +9,21 @@ import predictionRouter from './routes/predictionRoutes';
 import authRouter from './routes/authRoutes';
 import gameRouter from './routes/gameRoutes';
 import cors from 'cors';
+import mongoSanitize from 'express-mongo-sanitize';
+import xss from 'xss-clean';
 import cookieParser from 'cookie-parser';
 
 const app : express.Application = express();
 
-// serving static files
-app.use(express.static(`${__dirname}/public`));
 
 // set security HTTP headers
 app.use(helmet());
-app.use(cors());
-
-
-app.use(helmet.contentSecurityPolicy({
-    useDefaults: true,
-    directives: {
-        "img-src": ["'self'", "https: data:", "http"],
-    }
+app.use(cors({
+    origin: true,
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT', 'OPTIONS'],
+    credentials: true,  // Enable credentials (cookies, authorization headers, etc.)
 }));
+
 
 // limit requests from same IP
 const limiter = rateLimit({
@@ -40,20 +37,26 @@ if (process.env.NODE_ENV == 'production') {
     app.use(limiter);
 }
 
-// development logging
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
-}
+
+
+app.use(morgan('dev'));
 
 // body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 
+app.use(cookieParser());
+// data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// data sanitization against XSS
+app.use(xss());
+
 app.use(hpp());
 
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/match", matchRouter);
 app.use("/api/v1/prediction", predictionRouter);
-app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/game", gameRouter);
 
 

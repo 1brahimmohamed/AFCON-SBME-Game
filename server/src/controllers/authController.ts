@@ -142,9 +142,6 @@ export const protect = asyncErrorCatching(async (req: Request, res: Response, ne
 
     let token;
 
-    console.log(req.cookies)
-
-
     if (
         req.headers.authorization &&
         req.headers.authorization.startsWith('Bearer')
@@ -153,8 +150,6 @@ export const protect = asyncErrorCatching(async (req: Request, res: Response, ne
     } else if (req.cookies._auth) {
         token = req.cookies._auth;
     }
-
-
 
     if (!token)
         return res.status(401).json({
