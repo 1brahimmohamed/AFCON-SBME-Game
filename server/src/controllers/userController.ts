@@ -20,13 +20,8 @@ export const getUser = asyncErrorCatching(async (req: Request, res: Response, ne
     const user = await User.findById(id);
 
     if (!user) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'User not found'
-            });
-    }  
+        return next(new Error('No user found with that ID'));
+    }
 
     res
         .status(200)
@@ -53,11 +48,26 @@ export const updateUser = asyncErrorCatching(async (req: Request, res: Response,
         new: true,
         runValidators: true
     });
+
+    if (!user) {
+        return next(new Error('No user found with that ID'));
+    }
+
+    res
+        .status(200)
+        .json({
+            status: 'success',
+            data: user
+        });
 })
 
 export const deleteUser = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    await User.findByIdAndDelete(id);
+    const user = await User.findByIdAndDelete(id);
+
+    if (!user) {
+        return next(new Error('No user found with that ID'));
+    }
 
     res
         .status(204)

@@ -12,6 +12,7 @@ import cors from 'cors';
 import mongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
 import cookieParser from 'cookie-parser';
+import globalErrorHandler from "./controllers/errorController";
 
 const app : express.Application = express();
 
@@ -25,22 +26,18 @@ const corsOptions: cors.CorsOptions = {
         'X-Access-Token',
         'Access-Control-Allow-Origin',
         'Access-Control-Allow-Headers',
-        'Access-Control-Allow-Credentials'
+        'Access-Control-Allow-Credentials',
+        'Authorization',
     ],
     optionsSuccessStatus: 200,
-    // credentials: true,
+    credentials: true,
     // preflightContinue: false,
-    origin: ['http://localhost:5173', 'https://www.afcon.sbme.api.ibrahimmohamed.online'],
+    origin: ['http://localhost:3001', 'afcon.sbme.ibrahimmohamed.online'],
     methods: ['GET','HEAD','OPTIONS','PUT','PATCH','POST','DELETE'],
 };
 
 
 app.use(cors(corsOptions));
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-    console.log(res)
-    next();
-});
 
 // set security HTTP headers
 app.use(helmet());
@@ -89,6 +86,8 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
         message: `Can't find ${req.originalUrl} on this server!`
     });
 });
+
+app.use(globalErrorHandler)
 
 
 export default app;

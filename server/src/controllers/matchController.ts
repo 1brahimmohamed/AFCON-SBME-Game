@@ -2,18 +2,13 @@ import Match from "../models/matchModel";
 import { Request, Response, NextFunction } from "express";
 import asyncErrorCatching from "../utils/asyncErrorCatching";
 import slugify from "slugify";
-
+import errorHandler from "../utils/errorHandler";
 export const getMatch = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     const match = await Match.findById(id);
 
     if (!match) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'Match not found'
-            });
+       return next(new errorHandler('Match not found', 404));
     }
 
     res
@@ -62,12 +57,7 @@ export const updateMatch = asyncErrorCatching(async (req: Request, res: Response
     });
 
     if (!match) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'Match not found'
-            });
+        return next(new errorHandler('Match not found', 404));
     }
 
     res
@@ -83,12 +73,7 @@ export const deleteMatch = asyncErrorCatching(async (req: Request, res: Response
     const match = await Match.findByIdAndDelete(id);
 
     if (!match) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'Match not found'
-            });
+        return next(new errorHandler('Match not found', 404));
     }
 
     res
@@ -105,12 +90,7 @@ export const getTodayMatches = asyncErrorCatching(async (req: Request, res: Resp
     const todayMatches = matches.filter(match => match.startTime.getDate() === new Date().getDate());
 
     if (!todayMatches) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'There are no matches today'
-            });
+        return next(new errorHandler('There is no matches today', 404));
     }
 
     res

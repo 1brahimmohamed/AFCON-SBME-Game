@@ -2,7 +2,7 @@ import Prediction from '../models/predictionModel';
 import { Request, Response, NextFunction } from "express";
 import asyncErrorCatching from "../utils/asyncErrorCatching";
 import Match from "../models/matchModel";
-
+import ErrorHandler from "../utils/errorHandler";
 
 export const getAllPredictions = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
     const predictions = await Prediction.find();
@@ -21,12 +21,7 @@ export const getPrediction = asyncErrorCatching(async (req: Request, res: Respon
     const prediction = await Prediction.findById(id);
 
     if (!prediction) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'Prediction not found'
-            });
+        return next(new ErrorHandler('Prediction not found', 404));
     }
 
     res
@@ -47,12 +42,7 @@ export const getMatchPredictions = asyncErrorCatching(async (req: Request, res: 
     const predictions = await Prediction.find({ match: match?._id });
 
     if (!predictions) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'Prediction not found'
-            });
+        return next(new ErrorHandler('Prediction not found', 404));
     }
 
     // divide the predictions into 3 arrays, one for each result
@@ -92,12 +82,7 @@ export const getMyPredictions = asyncErrorCatching(async (req: Request, res: Res
     const predictions = await Prediction.find({ user: id });
 
     if (!predictions) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'Prediction not found'
-            });
+        return next(new ErrorHandler('Prediction not found', 404));
     }
 
     res
@@ -115,12 +100,7 @@ export const deletePrediction = asyncErrorCatching(async (req: Request, res: Res
     const prediction = await Prediction.findByIdAndDelete(id);
 
     if (!prediction) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'Prediction not found'
-            });
+        return next(new ErrorHandler('Prediction not found', 404));
     }
 
     res

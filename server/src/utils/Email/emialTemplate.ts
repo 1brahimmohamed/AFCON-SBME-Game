@@ -61,7 +61,7 @@ const mailTemplate = (email :string, name: string, team: string) => {
           .form-title {
             color: #2a2a2a;
             font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-            font-weight: 800;
+            font-weight: 500;
             text-align: left;
             line-height: 20px;
             font-size: 25px;
@@ -199,5 +199,5 @@ const mailTemplate = (email :string, name: string, team: string) => {
     </html>
     `;
   };
-  
+
   export default mailTemplate;

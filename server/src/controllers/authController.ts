@@ -1,6 +1,7 @@
 import User from "../models/userModel";
 import asyncErrorCatching from "../utils/asyncErrorCatching";
 import {Request, Response, NextFunction } from "express";
+import errorHandler from "../utils/errorHandler";
 
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -39,7 +40,7 @@ const createSendToken = (user: any, statusCode: number, res: Response) => {
     });
 };
 
-export const login = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
+const login = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -51,41 +52,27 @@ export const login = asyncErrorCatching(async (req: Request, res: Response, next
             });
     }
 
+    console.log(email, password)
+
     const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'User not found'
-            });
+       return next(new errorHandler('Invalid credentials', 404));
     }
 
     const isMatch = await bycrypt.compare(password, user.password);
 
     if (!isMatch) {
-        return res
-            .status(404)
-            .json({
-                status: 'fail',
-                message: 'Invalid credentials'
-            });
+        return next(new errorHandler('Invalid credentials', 404));
     }
-
     createSendToken(user, 200, res);
 })
 
-export const signup = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
+const signup = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
     const { name, email, password, passwordConfirm, team } = req.body;
 
     if (!name || !email || !password || !passwordConfirm) {
-        return res
-            .status(400)
-            .json({
-                status: 'fail',
-                message: 'Please provide name, email, password and passwordConfirm'
-            });
+        return next(new errorHandler('Please provide all the required fields', 400));
     }
 
     // check if the user already exists
@@ -102,12 +89,7 @@ export const signup = asyncErrorCatching(async (req: Request, res: Response, nex
 
     // only @eng-st.cu.edu.eg emails are allowed
     if (!email.endsWith('@eng-st.cu.edu.eg')) {
-        return res
-            .status(400)
-            .json({
-                status: 'fail',
-                message: 'Only @eng-st.cu.edu.eg emails are allowed'
-            });
+        return next(new errorHandler('Only @eng-st.cu.edu.eg emails are allowed', 400));
     }
 
     // encrypt the password
@@ -127,7 +109,7 @@ export const signup = asyncErrorCatching(async (req: Request, res: Response, nex
     await sendEmailHandler(user);
 })
 
-export const logout = (req: Request, res: Response, next: NextFunction) => {
+const logout = (req: Request, res: Response, next: NextFunction) => {
     res.cookie('jwt', 'loggedout', {
         expires: new Date(Date.now() + 10 * 1000),
         httpOnly: true
@@ -138,7 +120,7 @@ export const logout = (req: Request, res: Response, next: NextFunction) => {
     });
 }
 
-export const protect = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
+const protect = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
 
     let token;
 
@@ -152,12 +134,7 @@ export const protect = asyncErrorCatching(async (req: Request, res: Response, ne
     }
 
     if (!token)
-        return res.status(401).json({
-            status: 'fail',
-            message: 'You are not logged in! Please log in to get access.'
-        });
-
-
+        return next(new errorHandler('You are not logged in! Please log in to get access.', 401));
 
     // Verify the token
     const decoded : any = jwt.verify(token, process.env.JWT_SECRET!);
@@ -168,10 +145,8 @@ export const protect = asyncErrorCatching(async (req: Request, res: Response, ne
     const newUser = await User.findById(decoded.id!);
 
     if (!newUser)
-        return res.status(401).json({
-            status: 'fail',
-            message: 'The user belonging to this token does no longer exist.'
-        });
+        return next(new errorHandler('The user belonging to this token does no longer exist.', 401));
+
 
     // Grant accesses to protected route
     req.user = newUser;
@@ -179,14 +154,11 @@ export const protect = asyncErrorCatching(async (req: Request, res: Response, ne
     next();
 })
 
-export const restrictTo = (...roles: string[]) => {
+const restrictTo = (...roles: string[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
         // roles ['admin', 'user']. role='user'
         if (!roles.includes(req.user.role)) {
-            return res.status(403).json({
-                status: 'fail',
-                message: 'You do not have permission to perform this action'
-            });
+            return next(new errorHandler('You do not have permission to perform this action', 403))
         }
 
         next();
@@ -198,5 +170,5 @@ export default {
     login,
     logout,
     protect,
-    restrictTo
+    restrictTo,
 };
