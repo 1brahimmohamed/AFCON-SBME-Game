@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/v1/game/leaderboard";
+const API_URL = "https://afcon-sbme-server.onrender.com/api/v1/game/leaderboard";
 
 
 export const getLeaderboard = async() => {
@@ -12,6 +12,6 @@ export const getLeaderboard = async() => {
 
     const { data } = res;
 
-    
+
     return data.data;
 }

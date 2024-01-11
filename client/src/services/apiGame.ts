@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/v1/game";
+const API_URL = "https://afcon-sbme-server.onrender.com/api/v1/game";
 
 export const predict = async (selectedTeam: string, matchId: string, token: string) => {
 

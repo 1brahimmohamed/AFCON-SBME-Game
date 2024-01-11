@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/v1/match";
+const API_URL = "https://afcon-sbme-server.onrender.com/api/v1/match";
 
 export const getTodayMatches = async () => {
 
