@@ -1,4 +1,4 @@
-const mailTemplate = (email :string, name: string, team: string) => {
+const mailTemplate = (email: string, name: string, team: string, year: string) => {
 
     return `
   
@@ -159,7 +159,9 @@ const mailTemplate = (email :string, name: string, team: string) => {
                                   <h3 class="form-heading">Email</h3> 
                                   <p class="form-answer">${email}
   
-    
+                                  <h3 class="form-heading">Class</h3>
+                                  <p class="form-answer">${year}</p>
+                                  
                                   <h3 class="form-heading">Supporting Team</h3>
                                   <p class="form-answer">${team}</p>
     
@@ -197,6 +199,6 @@ const mailTemplate = (email :string, name: string, team: string) => {
       </body>
     </html>
     `;
-  };
+};
 
-  export default mailTemplate;
+export default mailTemplate;

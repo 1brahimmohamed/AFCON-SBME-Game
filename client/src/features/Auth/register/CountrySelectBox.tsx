@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import COUNTRIES from '../../utils/countries'
+import COUNTRIES from '../../../utils/countries'
 
 
 
@@ -9,7 +9,7 @@ function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SelectBox({onChange}: {onChange: (event: any) => void}) {
+export default function CountrySelectBox({onChange}: {onChange: (event: any) => void}) {
   const [selected, setSelected] = useState(COUNTRIES[7])
 
   const onChangeHandler = (event: any) => {
@@ -23,7 +23,7 @@ export default function SelectBox({onChange}: {onChange: (event: any) => void}) 
         <>
           <Listbox.Label className="block text-sm font-medium text-gray-900">Supporting Team</Listbox.Label>
           <div className="relative mt-2">
-            <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+            <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-AAPrimary sm:text-sm sm:leading-6">
               <span className="flex items-center">
                 <img src={selected.avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
                 <span className="ml-3 block truncate">{selected.name}</span>
@@ -46,7 +46,7 @@ export default function SelectBox({onChange}: {onChange: (event: any) => void}) 
                     key={country.id}
                     className={({ active }) =>
                       classNames(
-                        active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                        active ? 'bg-AAPrimary text-white' : 'text-gray-900',
                         'relative cursor-default select-none py-2 pl-3 pr-9'
                       )
                     }

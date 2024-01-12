@@ -69,7 +69,7 @@ const login = asyncErrorCatching(async (req: Request, res: Response, next: NextF
 })
 
 const signup = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
-    const { name, email, password, passwordConfirm, team } = req.body;
+    const { name, email, password, passwordConfirm, team, year } = req.body;
 
     if (!name || !email || !password || !passwordConfirm) {
         return next(new errorHandler('Please provide all the required fields', 400));
@@ -109,7 +109,7 @@ const signup = asyncErrorCatching(async (req: Request, res: Response, next: Next
         email,
         team,
         password: hashedPassword,
-        passwordConfirm
+        class: year,
     });
 
     createSendToken(user, 201, res);

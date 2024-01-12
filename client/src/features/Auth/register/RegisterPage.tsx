@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SelectBox from "../../../ui/shared/SelectBox";
+import CountrySelectBox from "./CountrySelectBox.tsx";
 import { register } from "../../../services/apiAuth";
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import ClassSelectBox from "./ClassSelectBox.tsx";
 
 
 const errorAlert = (message: string) => (
@@ -23,7 +24,8 @@ const RegisterPage = () => {
         name: '',
         password: '',
         passwordConfirm: '',
-        country: 'Egypt'
+        country: 'Egypt',
+        class: 'SBME 2024'
     });
 
     const navigate = useNavigate();
@@ -37,10 +39,16 @@ const RegisterPage = () => {
     };
 
     const countrySelectHandler = (event: any) => {
-        console.log(event);
         setFormData({
             ...formData,
             country: event.name
+        })
+    }
+
+    const classSelectHandler = (event: any) => {
+        setFormData({
+            ...formData,
+            class: event.name
         })
     }
 
@@ -190,7 +198,8 @@ const RegisterPage = () => {
                                 </div>
                             </div>
 
-                            <SelectBox onChange={countrySelectHandler} />
+                            <ClassSelectBox onChange={classSelectHandler} />
+                            <CountrySelectBox onChange={countrySelectHandler} />
 
                             <div>
                                 <button

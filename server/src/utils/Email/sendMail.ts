@@ -11,7 +11,7 @@ const sendEmailHandler = async (user: any) =>{
     to: email,
     subject: `Thank your for Registering in SBME AFCON 2024 Game`,
     text: `Hi ${user.name},\n\nThank you for joining the fun by SBME 2024`,
-    html: mailTemplate(user.email, user.name , user.team)
+    html: mailTemplate(user.email, user.name , user.team, user.class)
   };
 
 

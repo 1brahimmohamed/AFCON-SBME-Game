@@ -6,6 +6,7 @@ export interface IUser {
     email: string;
     password: string;
     team: string;
+    class: string;
     role: string;
     score: number;
     predictions: Schema.Types.ObjectId[];
@@ -36,6 +37,10 @@ const UserSchema = new Schema<IUserDocument>({
     team: {
         type: String,
         default: ''
+    },
+    class: {
+        type: String,
+        required: [true, 'Please enter your class'],
     },
     role: {
         type: String,
