@@ -9,6 +9,7 @@ import useSignOut from 'react-auth-kit/hooks/useSignOut';
 const navigation = [
     { name: "Today's Matches", href: '/today-matches' },
     { name: 'Leaderboards', href: '/leaderboards' },
+    { name: 'Rules', href: '/rules' },
 ]
 
 const Navbar = () => {
