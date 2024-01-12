@@ -57,7 +57,7 @@ const HomePage = () => {
                             </Link>
                         </div>
 
-                        <div className="mt-56 md:mt-16 space-y-6 flex-col items-center justify-center">
+                        <div className="mt-36 md:mt-16 space-y-6 flex-col items-center justify-center">
                             <div>
                                 <h6 className=" text-center font-bold leading-9 tracking-tight text-white">
                                     Sponsored by
