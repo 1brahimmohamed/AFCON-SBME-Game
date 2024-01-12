@@ -222,11 +222,13 @@ const RegisterPage = () => {
                         Sponsored by
                     </h6>
 
-                    <img
-                        className="mx-auto h-8 w-auto"
-                        src="https://i.postimg.cc/Dycj2J3N/3rd.png"
-                        alt="SBME CAN 2024"
-                    />
+                    <Link to={"https://edu.ieee.org/eg-cu-embs/"} target={"_blank"}>
+                        <img
+                            className="mx-auto h-8 w-auto"
+                            src="https://i.postimg.cc/Dycj2J3N/3rd.png"
+                            alt="SBME CAN 2024"
+                        />
+                    </Link>
 
                 </div>
             </div>

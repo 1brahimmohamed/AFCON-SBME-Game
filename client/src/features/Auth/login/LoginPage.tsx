@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
-import { login } from "../../../services/apiAuth";
+import {login} from "../../../services/apiAuth";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
@@ -50,7 +50,7 @@ export default function LoginPage() {
 
         setIsSubmitting(false);
 
-        if(res.status === "success"){
+        if (res.status === "success") {
             if (
                 signIn({
                     auth: {
@@ -73,8 +73,7 @@ export default function LoginPage() {
                     navigate('/');
                 }, 2000)
             }
-        }
-        else{
+        } else {
             withReactContent(Swal).fire({
                 text: res.message,
                 icon: "error",
@@ -155,7 +154,8 @@ export default function LoginPage() {
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Not a member?{' '}
-                        <Link to="/auth/register" className="font-semibold leading-6 text-AAPrimary hover:text-AAPrimaryLight">
+                        <Link to="/auth/register"
+                              className="font-semibold leading-6 text-AAPrimary hover:text-AAPrimaryLight">
                             Bethazr .. Sign up now w not ya m3lem
                         </Link>
                     </p>
@@ -166,12 +166,13 @@ export default function LoginPage() {
                     <h6 className="mt-6 text-center font-bold leading-9 tracking-tight text-gray-900">
                         Sponsored by
                     </h6>
-
-                    <img
-                        className="mx-auto h-8 w-auto"
-                        src="https://i.postimg.cc/Dycj2J3N/3rd.png"
-                        alt="SBME CAN 2024"
-                    />
+                    <Link to={"https://edu.ieee.org/eg-cu-embs/"} target={"_blank"}>
+                        <img
+                            className="mx-auto h-8 w-auto"
+                            src="https://i.postimg.cc/Dycj2J3N/3rd.png"
+                            alt="SBME CAN 2024"
+                        />
+                    </Link>
 
                 </div>
             </div>
