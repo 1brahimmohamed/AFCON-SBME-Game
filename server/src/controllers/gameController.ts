@@ -8,7 +8,6 @@ import ErrorHandler from "../utils/errorHandler";
 
 export const predict = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
 
-    const {id} = req.user;
     const matchId = req.params.matchId;
     const {selectedTeam} = req.body;
 

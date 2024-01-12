@@ -56,6 +56,24 @@ const HomePage = () => {
                                 Get started
                             </Link>
                         </div>
+
+                        <div className="mt-56 md:mt-16 space-y-6 flex-col items-center justify-center">
+                            <div>
+                                <h6 className=" text-center font-bold leading-9 tracking-tight text-white">
+                                    Sponsored by
+                                </h6>
+                            </div>
+
+                            <div className={"flex justify-center"}>
+                                <div className={"bg-white w-1/2 md:w-1/3 p-2 rounded-lg"}>
+                                    <img
+                                        className="mx-auto h-8 w-auto"
+                                        src="https://i.postimg.cc/Dycj2J3N/3rd.png"
+                                        alt="SBME CAN 2024"
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div

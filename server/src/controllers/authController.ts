@@ -75,6 +75,14 @@ const signup = asyncErrorCatching(async (req: Request, res: Response, next: Next
         return next(new errorHandler('Please provide all the required fields', 400));
     }
 
+    if (password !== passwordConfirm) {
+        return next(new errorHandler('Passwords do not match', 400));
+    }
+
+    if (password.length < 6) {
+        return next(new errorHandler('Password must be at least 6 characters', 400));
+    }
+
     // check if the user already exists
     const existingUser = await User.findOne({ email });
 
