@@ -1,7 +1,21 @@
 import { Link } from "react-router-dom";
-
+import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+import {useNavigate} from "react-router-dom";
 
 const HomePage = () => {
+
+    const isAuthenticated = useIsAuthenticated();
+    const navigate = useNavigate();
+
+    const onGetStarted = () => {
+        // if user is logged in, redirect to dashboard
+        // else redirect to login page
+        if (isAuthenticated()) {
+            navigate('/today-matches');
+        } else {
+            navigate('/auth/register');
+        }
+    };
 
     return (
         <div className="bg-AA">
@@ -46,15 +60,15 @@ const HomePage = () => {
                             EMBS SBME - <br/> African Cup of Nations 2024 Prediction Game
                         </h1>
                         <p className="mt-6 text-lg leading-8 text-gray-300">
-                            Join the biggest prediction game in the history of the SBME
+                            Join the biggest prediction game in the history of SBME
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
-                            <Link
-                                to="/auth/register"
+                            <button
+                                onClick={onGetStarted}
                                 className="rounded-md bg-AAPrimary px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-AAPrimaryLight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
                             >
                                 Get started
-                            </Link>
+                            </button>
                         </div>
 
                         <div className="mt-36 md:mt-16 space-y-6 flex-col items-center justify-center">

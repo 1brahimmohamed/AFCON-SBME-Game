@@ -70,7 +70,7 @@ export default function LoginPage() {
                 })
 
                 setTimeout(() => {
-                    navigate('/');
+                    navigate('/today-matches');
                 }, 2000)
             }
         } else {

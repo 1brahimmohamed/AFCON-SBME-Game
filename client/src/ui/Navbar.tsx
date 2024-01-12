@@ -54,7 +54,9 @@ const Navbar = () => {
                     {navigation.map((item) => (
                         <Link key={item.name} to={item.href}
                             className="text-sm font-semibold leading-6 text-white hover:text-AASecondary">
-                            {item.name}
+                            <button>
+                                {item.name}
+                            </button>
                         </Link>
                     ))}
                 </div>
@@ -68,12 +70,12 @@ const Navbar = () => {
                             <div className="flex gap-4">
                                 <div className="hover:text-AASecondary">
                                     <Link to="/auth/login">
-                                        Log in <span aria-hidden="true">&rarr;</span>
+                                       <button>  Log in <span aria-hidden="true">&rarr;</span> </button>
                                     </Link>
                                 </div>
                                 <div className="hover:text-AASecondary">
                                     <Link to="/auth/register">
-                                        Register <span aria-hidden="true">&rarr;</span>
+                                       <button>Register <span aria-hidden="true">&rarr;</span></button>
                                     </Link>
                                 </div>
                             </div>
