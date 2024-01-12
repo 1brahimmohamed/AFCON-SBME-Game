@@ -17,7 +17,7 @@ const errorAlert = (message: string) => (
 )
 
 const RegisterPage = () => {
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
         name: '',
@@ -46,11 +46,15 @@ const RegisterPage = () => {
 
     const submitHandler = async (event: any) => {
         event.preventDefault();
-        // disable form button
+
 
         if (formData.name === '' || formData.email === '' || formData.password === '' || formData.passwordConfirm === '') {
-
             errorAlert('Please fill all fields')
+            return;
+        }
+
+        if (formData.password.length < 6) {
+            errorAlert('Password must be at least 6 characters')
             return;
         }
 
@@ -66,9 +70,11 @@ const RegisterPage = () => {
             return;
         }
 
+        setIsSubmitting(true);
+
         const res = await register(formData);
 
-        console.log(res)
+        setIsSubmitting(false);
 
         if (res.status === "success") {
 
@@ -188,9 +194,10 @@ const RegisterPage = () => {
 
                             <div>
                                 <button
+                                    disabled={isSubmitting}
                                     type="submit"
                                     onClick={submitHandler}
-                                    className="flex w-full justify-center rounded-md bg-AAPrimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-AAPrimaryDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    className="flex w-full disabled:bg-gray-400 justify-center rounded-md bg-AAPrimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-AAPrimaryDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
                                     Register
                                 </button>

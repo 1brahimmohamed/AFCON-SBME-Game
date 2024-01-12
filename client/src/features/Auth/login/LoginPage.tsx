@@ -7,6 +7,8 @@ import withReactContent from 'sweetalert2-react-content'
 
 export default function LoginPage() {
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -42,7 +44,11 @@ export default function LoginPage() {
             return;
         }
 
+        setIsSubmitting(true);
+
         const res = await login(formData);
+
+        setIsSubmitting(false);
 
         if(res.status === "success"){
             if (
@@ -133,31 +139,13 @@ export default function LoginPage() {
                                 </div>
                             </div>
 
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center">
-                                    <input
-                                        id="remember-me"
-                                        name="remember-me"
-                                        type="checkbox"
-                                        className="h-4 w-4 rounded border-gray-300 text-AAPrimary focus:ring-AAPrimary"
-                                    />
-                                    <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-900">
-                                        Remember me
-                                    </label>
-                                </div>
-
-                                <div className="text-sm leading-6">
-                                    <a href="#" className="font-semibold text-AAPrimary hover:text-AAPrimaryLight">
-                                        Forgot password?
-                                    </a>
-                                </div>
-                            </div>
 
                             <div>
                                 <button
+                                    disabled={isSubmitting}
                                     type="submit"
                                     onClick={submitHandler}
-                                    className="flex w-full justify-center rounded-md bg-AAPrimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-AAPrimaryDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    className="flex w-full disabled:bg-gray-400 justify-center rounded-md bg-AAPrimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-AAPrimaryDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
                                     Sign in
                                 </button>
