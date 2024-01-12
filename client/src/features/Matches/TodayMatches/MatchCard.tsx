@@ -2,6 +2,7 @@ import MatchTeam from './MatchTeam';
 import {useState} from 'react';
 import {FaCheck} from "react-icons/fa";
 import {FaPeopleGroup} from "react-icons/fa6";
+import { FaHandshake } from "react-icons/fa";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import {predict} from '../../../services/apiGame';
@@ -145,7 +146,7 @@ const MatchCard = ({match}: { match: any }) => {
                             onClick={() => handlePrediction('Draw')}
                             className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                         >
-                            <FaPeopleGroup className="h-5 w-5 text-gray-400" aria-hidden="true"/>
+                            <FaHandshake className="h-5 w-5 text-gray-400" aria-hidden="true"/>
                             Draw
                         </button>
                     </div>
