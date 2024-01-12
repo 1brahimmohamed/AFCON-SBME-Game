@@ -43,7 +43,7 @@ const HomePage = () => {
                     </div>
                     <div className="text-center">
                         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-                            SBME 2024 - <br/> African Cup of Nations 2024 Prediction Game
+                            EMBS SBME - <br/> African Cup of Nations 2024 Prediction Game
                         </h1>
                         <p className="mt-6 text-lg leading-8 text-gray-300">
                             Join the biggest prediction game in the history of the SBME
