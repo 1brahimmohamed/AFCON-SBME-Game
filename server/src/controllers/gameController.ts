@@ -116,7 +116,10 @@ export const updateScoreAfterMatch = asyncErrorCatching(async (req: Request, res
 
 export const getLeaderboard = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
 
-    const users = await User.find({}).sort({score: -1});
+    const users = await User.find({}).select({
+        name: 1,
+        score: 1
+    }).sort({score: -1});
 
     res
         .status(200)

@@ -39,7 +39,7 @@ const Leaderboard = () => {
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
                                 {leaderboards.map((person: any, index: number) => (
-                                    <tr key={person.email}>
+                                    <tr key={index}>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                             {index + 1 === 1? "🏆": (index + 1) }
                                         </td>
@@ -47,7 +47,6 @@ const Leaderboard = () => {
                                             {person.name}
                                         </td>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.score}</td>
-
                                     </tr>
                                 ))}
                                 </tbody>
