@@ -31,7 +31,6 @@ const corsOptions: cors.CorsOptions = {
     ],
     optionsSuccessStatus: 200,
     credentials: true,
-    // preflightContinue: false,
     origin: "*",
     methods: ['GET','HEAD','OPTIONS','PUT','PATCH','POST','DELETE'],
 };
@@ -70,6 +69,15 @@ app.use(xss());
 
 app.use(hpp());
 
+// Global Middleware
+app.use((req :Request, res :Response, next: NextFunction) => {
+    console.log(req.path, req.method);
+    res.header('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+    next();
+})
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);

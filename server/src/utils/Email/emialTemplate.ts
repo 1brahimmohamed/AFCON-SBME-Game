@@ -63,7 +63,6 @@ const mailTemplate = (email :string, name: string, team: string) => {
             font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
             font-weight: 500;
             text-align: left;
-            line-height: 20px;
             font-size: 25px;
             padding: 1rem 0 1rem 0;
           }
@@ -150,7 +149,7 @@ const mailTemplate = (email :string, name: string, team: string) => {
     
                           
                                  
-                                  <h2 class="form-title">Thank you for Registering for SBME AFCON 2024 Game</h2>
+                                  <h2 class="form-title">You are in! Good Luck</h2>
     
                                 <div class="form-container">
                                   <h3 class="form-heading">Name</h3>
