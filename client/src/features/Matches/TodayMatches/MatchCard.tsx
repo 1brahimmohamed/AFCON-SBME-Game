@@ -13,6 +13,9 @@ const convertDate = (date: string) => {
     const dateObj = new Date(date);
     const hours = dateObj.getHours();
     const minutes = dateObj.getMinutes();
+    if (minutes === 0)
+        return `${hours}:00`
+    else
     return `${hours}:${minutes}`
 }
 

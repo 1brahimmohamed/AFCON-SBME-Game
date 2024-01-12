@@ -6,7 +6,7 @@ const API_URL = `https://afcon-sbme-server.onrender.com/api/v1/auth`;
 export const login = async (formData: any) => {
     try {
         const res = await axios.post(`${API_URL}/login`, {
-            email: formData.email,
+            email: formData.email.toLowerCase(),
             password: formData.password,
         });
 

@@ -117,7 +117,8 @@ export const getLeaderboard = asyncErrorCatching(async (req: Request, res: Respo
 
     const users = await User.find({}).select({
         name: 1,
-        score: 1
+        score: 1,
+        class: 1
     }).sort({score: -1});
 
     res
