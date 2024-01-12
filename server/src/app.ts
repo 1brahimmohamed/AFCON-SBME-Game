@@ -84,7 +84,7 @@ app.use("/api/v1/match", matchRouter);
 app.use("/api/v1/prediction", predictionRouter);
 app.use("/api/v1/game", gameRouter);
 
-// app.options('*', cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // handle undefined routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
@@ -95,6 +95,4 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use(globalErrorHandler)
-
-
 export default app;

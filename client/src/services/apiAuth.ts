@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const API_URL = `https://afcon.sbme.api.ibrahimmohamed.online/api/v1/auth`;
+const API_URL = `https://afcon-sbme-server.onrender.com/api/v1/auth`;
 
 export const login = async (formData: any) => {
     try {
