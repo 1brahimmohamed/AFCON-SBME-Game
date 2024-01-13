@@ -5,9 +5,13 @@ import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 
 const CLASS_NAMES = [
     {id: 1, name: 'SBME 2024'},
+    {id: 5, name: 'HEM 2024'},
     {id: 2, name: 'SBME 2025'},
+    {id: 6, name: 'HEM 2025'},
     {id: 3, name: 'SBME 2026'},
+    {id: 7, name: 'HEM 2026'},
     {id: 4, name: 'SBME 2027'},
+    {id: 8, name: 'HEM 2027'},
 ];
 
 function classNames(...classes: any[]) {
