@@ -12,10 +12,12 @@ const MatchPredictions = () => {
 
     const {teamA, teamB, draw, teams} = data
 
+    const total = teamA.count + teamB.count + draw.count
+
     const stats = [
-        {name: teams.teamA, value: teamA.count, unit: 'votes', label: teams.teamA},
-        {name: 'Draw', value: draw.count, unit: 'votes', label: 'Draw'},
-        {name: teams.teamB, value: teamB.count, unit: 'votes', label: teams.teamB},
+        {name: teams.teamA, value: Math.round(teamA.count / total), unit: '%', label: teams.teamA},
+        {name: 'Draw', value: Math.round(draw.count / total), unit: '%', label: 'Draw'},
+        {name: teams.teamB, value: Math.round(teamB.count / total), unit: '%', label: teams.teamB},
     ]
 
     return (
