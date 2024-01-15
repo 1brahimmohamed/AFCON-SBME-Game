@@ -4,27 +4,63 @@ import {MinusSmallIcon, PlusSmallIcon} from '@heroicons/react/24/outline'
 const RULES = [
     {
         header: "Game",
+        textDir: "ltr",
         ruleStatement:
             "Match Result prediction game. You predict the result of the match and earn points. The more accurate your prediction, the more points you earn.",
     },
     {
         header: 'Predict',
+        textDir: "ltr",
         ruleStatement:
             'You need to register and login to play the game. Once you are logged in, you can go to Today Matches page and start predicting. You need to predict before the match starts. You can predict only once for a match.' +
             'Make sure of your prediction before you submit. You cannot change your prediction once you submit.',
     },
     {
         header: 'Score Calculation',
+        textDir: "ltr",
         ruleStatement:
             'You earn points for each correct prediction.  group stage matches - 1 point, round of 16 - 2 points, quarter finals - 3 points, semi finals - 4 points, finals - 5 points. ',
     },
     {
         header: 'Bouns points',
+        textDir: "ltr",
         ruleStatement: "You get double the points if you predict a side with less than 25% votes & Triple the points if you predict a side with less than 10% votes."
     },
     {
         header: "Score Calculation Time",
+        textDir: "ltr",
         ruleStatement: "Score calculation happens after the match is finished or at the end of the day. You can see the score in the leaderboard page."
+    },{
+        header: "Arabic",
+        rtl: 'rtl',
+        ruleStatement: `
+        رجالة 24 عارفين الي فيها
+انما بالنسبة للباقي 
+الموضوع كله انك بتتوقع الفريق الي هيكسب بس ياما team a او team b او تعادل
+
+لو توقعك صح بتاخد نقطة لو لا مش بتاخد حاجة
+بس النقطة دي بتضعاف علي حسب الماتش يعني : 
+دور المجموعات نقطة
+دور ال ١٦ نقطتين
+دور ال ٨  ٣ نقط
+دور ال ٤ ٤ نقط
+و الفاينال ب ٥ 
+
+في درجات بونص .. طب ازاي؟ 
+
+الdouble لو توقعك صح و انت مختار فريق اقل من ٢٥% من الي الناس مختارينه
+و الtriple لو اقل من 10%
+
+يعني ايه؟ يعني لو مصر بتلعب و كلنا اختارنا مصر و في مجموعة اختارت موزانبيق و كان عددهم اقل من ٢٥% او ١٠% من توتال الاصوات بياخدو بونص
+
+طبعا مش لازم اقول ان الvote نهائي يعني لو عملته مرة لازم تكون متاكد منه و مفيش تعديل 
+و الvoting بيقفل لوحده اول مالماتش يبدء .. ماتشات اليوم بتظهر لوحدها اوتوماتيك المفروض الساعة ١٢ بليل و اليوم الي قبله بتتشال
+
+عشان الشفافية طبعا تقدرو تشوفو مين صوت لمين في الprediction page و النسب 😼
+
+Enjoy 
+
+* لو في حاجة في الويسايت تعبانة في الresponse time دة عشان احنا فقرا و ال hosting بتاعنا ببلاش بس * 😂`
     }
 ]
 
@@ -54,7 +90,7 @@ export default function Rules() {
                                             </Disclosure.Button>
                                         </dt>
                                         <Disclosure.Panel as="dd" className="mt-2 pr-12">
-                                            <p className="text-base leading-7 text-gray-600">{rule.ruleStatement}</p>
+                                            <p dir={rule.rtl} className="text-base leading-7 text-gray-600">{rule.ruleStatement}</p>
                                         </Disclosure.Panel>
                                     </>
                                 )}
