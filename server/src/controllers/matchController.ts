@@ -20,7 +20,7 @@ export const getMatch = asyncErrorCatching(async (req: Request, res: Response, n
 })
 
 export const getAllMatches = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
-    const matches = await Match.find();
+    const matches = await Match.find().sort({name: 1});
 
     res
         .status(200)

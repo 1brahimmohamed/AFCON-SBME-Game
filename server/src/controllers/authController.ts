@@ -52,8 +52,6 @@ const login = asyncErrorCatching(async (req: Request, res: Response, next: NextF
             });
     }
 
-    console.log(email, password)
-
     const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
@@ -106,7 +104,7 @@ const signup = asyncErrorCatching(async (req: Request, res: Response, next: Next
 
     const user = await User.create({
         name,
-        email,
+        email: email.toLowerCase(),
         team,
         password: hashedPassword,
         class: year,

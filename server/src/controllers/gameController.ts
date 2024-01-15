@@ -78,6 +78,9 @@ export const updateScoreAfterMatch = asyncErrorCatching(async (req: Request, res
     // get all match predictions
     const matchPredictions = await Prediction.find({match: matchId});
 
+   // calculate the bonus factor
+    const bonusFactor = calculateBonus(matchPredictions, matchWinner);
+
     // for each prediction update the score for the user
     matchPredictions.forEach(async (prediction) => {
 
@@ -91,19 +94,22 @@ export const updateScoreAfterMatch = asyncErrorCatching(async (req: Request, res
         if (selectedTeam === matchWinner) {
             const type = match.type;
             if (type === 'group') {
-                user.score += 1;
+                user.score += (bonusFactor);
             } else if (type === 'round of 16') {
-                user.score += 2;
+                user.score += (2 * bonusFactor);
             } else if (type === 'quarter-finals') {
-                user.score += 3;
+                user.score += (3 * bonusFactor)
             } else if (type === 'semi-finals') {
-                user.score += 4;
+                user.score += (4 * bonusFactor);
             } else if (type === 'finals') {
-                user.score += 5;
+                user.score += (5 * bonusFactor);
             }
             await user.save();
         }
     });
+
+    match.scoreResolved = true;
+    await match.save();
 
     res
         .status(200)
@@ -130,6 +136,24 @@ export const getLeaderboard = asyncErrorCatching(async (req: Request, res: Respo
 
 });
 
+const calculateBonus = (matchPredictions: any, winner: string) => {
+    let bonusFactor = 1;
+
+    if (matchPredictions.length === 0)
+        return bonusFactor;
+
+    // get the total number of winner predictions
+    const winnerPredictions = matchPredictions.filter((prediction: any) => prediction.predictedTeam === winner);
+
+    if (Math.round(winnerPredictions.length/ matchPredictions.length) <= 0.10) {
+        bonusFactor = 3;
+    }
+    else if (Math.round(winnerPredictions.length/ matchPredictions.length) <= 0.25) {
+        bonusFactor = 2;
+    }
+
+    return bonusFactor;
+}
 export default {
     predict,
     updateScoreAfterMatch,
