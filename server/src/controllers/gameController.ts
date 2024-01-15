@@ -145,10 +145,10 @@ const calculateBonus = (matchPredictions: any, winner: string) => {
     // get the total number of winner predictions
     const winnerPredictions = matchPredictions.filter((prediction: any) => prediction.predictedTeam === winner);
 
-    if (Math.round(winnerPredictions.length/ matchPredictions.length) <= 0.10) {
+    if (Math.round((winnerPredictions.length/ matchPredictions.length) * 100) <= 10) {
         bonusFactor = 3;
     }
-    else if (Math.round(winnerPredictions.length/ matchPredictions.length) <= 0.25) {
+    else if (Math.round((winnerPredictions.length/ matchPredictions.length) * 100) <= 25) {
         bonusFactor = 2;
     }
 
