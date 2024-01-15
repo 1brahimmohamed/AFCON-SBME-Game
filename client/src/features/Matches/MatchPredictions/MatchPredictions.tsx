@@ -15,9 +15,9 @@ const MatchPredictions = () => {
     const total = teamA.count + teamB.count + draw.count
 
     const stats = [
-        {name: teams.teamA, value: Math.round(teamA.count / total), unit: '%', label: teams.teamA},
-        {name: 'Draw', value: Math.round(draw.count / total), unit: '%', label: 'Draw'},
-        {name: teams.teamB, value: Math.round(teamB.count / total), unit: '%', label: teams.teamB},
+        {name: teams.teamA, value: teamA.count, percentage: Math.round((teamA.count / total) * 100) ,  unit: 'vote', label: teams.teamA},
+        {name: 'Draw', value: draw.count, percentage: Math.round((draw.count / total) * 100) , unit: 'vote', label: 'Draw'},
+        {name: teams.teamB, value: teamB.count, percentage: Math.round((teamB.count / total) * 100) , unit: 'vote', label: teams.teamB},
     ]
 
     return (

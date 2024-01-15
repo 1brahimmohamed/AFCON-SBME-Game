@@ -7,9 +7,15 @@ const matchStats = ({stats}: { stats: any }) => {
                     {stats.map((stat: any) => (
                         <div key={stat.name} className="bg-AAPrimary px-4 py-6 sm:px-6 lg:px-8 rounded">
                             <p className="text-lg font-medium leading-6">{stat.name}</p>
-                            <div className="mt-2 flex items-baseline gap-x-2">
-                                <p className="text-4xl text-AASecondary font-semibold tracking-tight">{stat.value}</p>
-                                {stat.unit ? <span className="text-sm text-gray-400">{stat.unit}</span> : null}
+                            <div className={"flex justify-between"}>
+                                <div className="mt-2 flex items-baseline gap-x-2">
+                                    <p className="text-4xl text-AASecondary font-semibold tracking-tight">{stat.value}</p>
+                                    {stat.unit ? <span className="text-sm text-gray-400">{stat.unit}</span> : null}
+                                </div>
+                                <div className="mt-2 flex items-baseline gap-x-2">
+                                    <p className="text-4xl text-AASecondary font-semibold tracking-tight">{stat.percentage}</p>
+                                    {stat.unit ? <span className="text-sm text-gray-400">%</span> : null}
+                                </div>
                             </div>
                         </div>
                     ))}
