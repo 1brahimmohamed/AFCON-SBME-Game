@@ -63,7 +63,7 @@ const Navbar = () => {
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end text-sm font-semibold leading-6 text-white">
                     {
                         isAuthenticated() ? (
-                            <button onClick={logoutHandler}>
+                            <button onClick={logoutHandler} className={"hover:text-AASecondary"}>
                                 Logout
                             </button>
                         ) : (

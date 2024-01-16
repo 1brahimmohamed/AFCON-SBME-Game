@@ -1,13 +1,15 @@
 import { useLoaderData } from 'react-router-dom';
-import { getLeaderboard } from "../../services/apiLeaderboard"
+import { getLeaderboard } from "../../services/apiGame.ts"
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 const Leaderboard = () => {
 
     const leaderboards: any = useLoaderData();
+    const userData: any = useAuthUser();
 
     return (
         <div className="px-4 sm:px-6 lg:px-8">
-            <div className="sm:flex sm:items-center">
+            <div className="sm:flex sm:items-center justify-between space-y-4 sm:space-y-0">
                 <div className="sm:flex-auto">
                     <h1 className="text-base font-semibold leading-6 text-gray-900">Leaderboards</h1>
                     <p className="mt-2 text-sm text-gray-700">
@@ -15,6 +17,15 @@ const Leaderboard = () => {
                     </p>
                 </div>
 
+                {
+                    userData &&
+                    <div className="sm:flex-auto text-left sm:text-right">
+                        <h1 className="text-base font-semibold leading-6 text-gray-900">Your Score is</h1>
+                        <p className="mt-2 text-sm text-gray-700">
+                            {userData.score}
+                        </p>
+                    </div>
+                }
             </div>
             <div className="mt-8 flow-root">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
