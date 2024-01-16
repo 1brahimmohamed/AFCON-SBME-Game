@@ -31,7 +31,7 @@ const corsOptions: cors.CorsOptions = {
     ],
     optionsSuccessStatus: 200,
     credentials: true,
-    origin: "https://afcon.sbme.ibrahimmohamed.online",
+    // origin: `${process.env.ALLOWED_ORIGIN === 'dev'? "http://localhost:3001" : "https://afcon.sbme.ibrahimmohamed.online"}`,
     methods: ['GET','HEAD','OPTIONS','PUT','PATCH','POST','DELETE'],
 };
 
@@ -71,7 +71,14 @@ app.use(hpp());
 
 // Global Middleware
 app.use((req :Request, res :Response, next: NextFunction) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://afcon.sbme.ibrahimmohamed.online');
+    let allowedOrigin: string = ''
+    if (process.env.ALLOWED_ORIGIN === 'dev') {
+        allowedOrigin = 'http://localhost:3001'
+    }
+    else {
+        allowedOrigin = 'https://afcon.sbme.ibrahimmohamed.online'
+    }
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
