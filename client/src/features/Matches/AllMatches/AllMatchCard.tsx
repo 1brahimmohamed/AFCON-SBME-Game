@@ -40,13 +40,13 @@ const AllMatchCard = ({match}: { match: any }) => {
                 </div>
 
                 <div className='flex'>
-                    <AllMatchTeam team={match.teamA} side="Home" winner={match.winner? `${match.winner}`: ``} isDraw={match.winner === "Draw"} />
+                    <AllMatchTeam team={match.teamA} side="Home" winner={match.winner? `${match.winner}`: ``} />
 
                     <div className="w-px flex-1 h-full my-auto">
                         <div className='my-1 md:my-6'>VS</div>
                     </div>
 
-                    <AllMatchTeam team={match.teamB} side='Away' winner={match.winner? `${match.winner}`: ``} isDraw={match.winner === "Draw"}/>
+                    <AllMatchTeam team={match.teamB} side='Away' winner={match.winner? `${match.winner}`: ``}/>
                 </div>
             </div>
             <div>
