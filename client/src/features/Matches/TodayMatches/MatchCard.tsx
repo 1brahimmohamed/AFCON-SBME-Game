@@ -4,7 +4,6 @@ import {FaCheck} from "react-icons/fa";
 import {FaPeopleGroup} from "react-icons/fa6";
 import { FaHandshake } from "react-icons/fa";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import {predict} from '../../../services/apiGame';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -37,7 +36,6 @@ const MatchCard = ({match}: { match: any }) => {
 
     const [selectedTeam, setSelectedTeam] = useState('')
     const isAuthenticated = useIsAuthenticated()
-    const token = useAuthHeader();
     const navigate = useNavigate();
 
     const handleTeamClick = (team: string) => {
@@ -67,7 +65,7 @@ const MatchCard = ({match}: { match: any }) => {
                         if (selectedOption === "Draw")
                             prediction = "Draw"
 
-                        const res = await predict(prediction, match._id, token ? token : '');
+                        const res = await predict(prediction, match._id);
                         if (res.status === "success") {
                             withReactContent(Swal).fire({
                                 title: "Prediction Successful",

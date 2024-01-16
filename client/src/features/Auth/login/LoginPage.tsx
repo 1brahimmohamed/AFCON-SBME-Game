@@ -55,7 +55,7 @@ export default function LoginPage() {
                 signIn({
                     auth: {
                         token: res.data.token,
-                        type: "bearer",
+                        type: "Bearer",
                     },
                     userState: res.data.data.user
                 })

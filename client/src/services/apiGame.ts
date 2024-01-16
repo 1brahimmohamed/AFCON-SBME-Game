@@ -2,18 +2,14 @@ import axios from "axios";
 
 const API_URL = `${import.meta.env.VITE_BASE_URL}/game`;
 
-export const predict = async (selectedTeam: string, matchId: string, token: string) => {
 
-    // replace bearer with Bearer
-    token = token.replace("bearer", "Bearer");
+export const predict = async (selectedTeam: string, matchId: string) => {
 
     try {
         const res = await axios.post(`${API_URL}/predict/${matchId}`, {
             selectedTeam: selectedTeam
         }, {
-            headers: {
-                'Authorization': token
-            }
+            withCredentials: true,
         });
 
         const {data} = res;
@@ -43,3 +39,19 @@ export const getLeaderboard = async() => {
 
     return data.data;
 }
+
+
+export const getScore = async () => {
+    try {
+        const res = await axios.get(`${API_URL}/my-score`, {
+            withCredentials: true,
+        });
+
+        const {data} = res;
+
+        return data.data;
+    }
+    catch (e: any) {
+        return null
+    }
+};
