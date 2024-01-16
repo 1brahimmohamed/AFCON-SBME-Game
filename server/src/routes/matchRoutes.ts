@@ -9,7 +9,7 @@ matchRouter.route("/today")
             .get(matchController.getTodayMatches)
 
 matchRouter.route("/")
-            .get(authController.protect, matchController.getAllMatches)
+            .get(matchController.getAllMatches)
             .post(authController.protect, authController.restrictTo('admin'), matchController.createMatch)
 
 matchRouter.route("/:id")

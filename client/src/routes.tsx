@@ -9,6 +9,7 @@ import TodayMatches, { loader as todayMatchesLoader } from "./features/Matches/T
 import MatchPredictions, {loader as matchPredictionLoader} from "./features/Matches/MatchPredictions/MatchPredictions";
 import NotFount from "./ui/404.tsx";
 import Rules from "./ui/Rules.tsx";
+import AllMatches, { loader as allMatchesLoader } from "./features/Matches/AllMatches/AllMatches";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,11 @@ const router = createBrowserRouter([
                 path: "today-matches",
                 element: <TodayMatches />,
                 loader: todayMatchesLoader
+            },
+            {
+                path: "all-matches",
+                element: <AllMatches />,
+                loader: allMatchesLoader
             },
             {
                 path: "match/:slug",
