@@ -1,16 +1,17 @@
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Dialog } from "@headlessui/react";
-import { useState } from "react";
+import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Dialog} from "@headlessui/react";
+import {useState} from "react";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 
 
 const navigation = [
-    { name: "Today's Matches", href: '/today-matches' },
-    { name: 'All Matches', href: '/all-matches' },
-    { name: 'Leaderboards', href: '/leaderboards' },
-    { name: 'Rules', href: '/rules' },
+    {name: "Today's Matches", href: '/today-matches'},
+    {name: 'All Matches', href: '/all-matches'},
+    {name: 'Leaderboards', href: '/leaderboards'},
+    {name: 'Rules', href: '/rules'},
 ]
 
 const Navbar = () => {
@@ -18,6 +19,7 @@ const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
     const isAuthenticated = useIsAuthenticated();
+    const authUser: any = useAuthUser();
 
     const location = useLocation().pathname;
     const signOut = useSignOut();
@@ -48,13 +50,13 @@ const Navbar = () => {
                         onClick={() => setMobileMenuOpen(true)}
                     >
                         <span className="sr-only">Open main menu</span>
-                        <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                        <Bars3Icon className="h-6 w-6" aria-hidden="true"/>
                     </button>
                 </div>
                 <div className="hidden lg:flex lg:gap-x-12">
                     {navigation.map((item) => (
                         <Link key={item.name} to={item.href}
-                            className="text-sm font-semibold leading-6 text-white hover:text-AASecondary">
+                              className="text-sm font-semibold leading-6 text-white hover:text-AASecondary">
                             <button>
                                 {item.name}
                             </button>
@@ -71,12 +73,12 @@ const Navbar = () => {
                             <div className="flex gap-4">
                                 <div className="hover:text-AASecondary">
                                     <Link to="/auth/login">
-                                       <button>  Log in <span aria-hidden="true">&rarr;</span> </button>
+                                        <button> Log in <span aria-hidden="true">&rarr;</span></button>
                                     </Link>
                                 </div>
                                 <div className="hover:text-AASecondary">
                                     <Link to="/auth/register">
-                                       <button>Register <span aria-hidden="true">&rarr;</span></button>
+                                        <button>Register <span aria-hidden="true">&rarr;</span></button>
                                     </Link>
                                 </div>
                             </div>
@@ -85,7 +87,7 @@ const Navbar = () => {
                 </div>
             </nav>
             <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-                <div className="fixed inset-0 z-50" />
+                <div className="fixed inset-0 z-50"/>
                 <Dialog.Panel
                     className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-AAPrimaryDark px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
                     <div className="flex items-center justify-between">
@@ -103,16 +105,28 @@ const Navbar = () => {
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             <span className="sr-only">Close menu</span>
-                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                            <XMarkIcon className="h-6 w-6" aria-hidden="true"/>
                         </button>
                     </div>
+
                     <div className="mt-6 flow-root">
+                        {
+                            isAuthenticated() &&
+                            (
+                                <div
+                                    className="-mx-3 block space-y-5 rounded-lg px-3 py-3 font-bold leading-7 text-white"
+                                >
+                                    ALOHA, {authUser.name.toUpperCase()}
+                                </div>
+                            )
+                        }
                         <div className="-my-6 divide-y divide-AASecondaryLight">
-                            <div className="space-y-2 py-6" >
+                            <div className="space-y-2 py-6">
                                 {navigation.map((item) => (
-                                    <div className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-AASecondary">
+                                    <div
+                                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-AASecondary">
                                         <Link
-                                            onClick={()=>setMobileMenuOpen(false)}
+                                            onClick={() => setMobileMenuOpen(false)}
                                             key={item.name}
                                             to={item.href}
                                         >
