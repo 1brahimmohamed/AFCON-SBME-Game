@@ -45,13 +45,13 @@ app.use(helmet());
 
 // limit requests from same IP
 const limiter = rateLimit({
-    max: 1000,
+    max: 2000,
     windowMs: 60 * 60 * 1000, // 1 hour
     message: 'Too many requests from this IP, please try again in an hour!'
 });
 
 
-app.use(limiter);
+// app.use(limiter);
 
 
 app.use(morgan('dev'));
