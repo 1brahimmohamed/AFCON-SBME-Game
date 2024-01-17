@@ -9,7 +9,9 @@ export const predict = async (selectedTeam: string, matchId: string) => {
         const res = await axios.post(`${API_URL}/predict/${matchId}`, {
             selectedTeam: selectedTeam
         }, {
-            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('_auth')}`
+            }
         });
 
         const {data} = res;
@@ -44,7 +46,9 @@ export const getLeaderboard = async() => {
 export const getScore = async () => {
     try {
         const res = await axios.get(`${API_URL}/my-score`, {
-            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('_auth')}`
+            }
         });
 
         const {data} = res;

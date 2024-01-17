@@ -2,8 +2,8 @@ import createStore from 'react-auth-kit/createStore';
 
 const store: any = createStore({
     authName:'_auth',
-    authType:'cookie',
-    cookieDomain: "afcon-sbme-server.onrender.com",
+    authType:'localstorage',
+    cookieDomain: window.location.hostname,
     cookieSecure: window.location.protocol === 'https:',
   });
 
