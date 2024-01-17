@@ -16,6 +16,7 @@ import globalErrorHandler from "./controllers/errorController";
 
 const app : express.Application = express();
 
+
 //options for cors midddleware
 const corsOptions: cors.CorsOptions = {
     allowedHeaders: [
@@ -28,10 +29,11 @@ const corsOptions: cors.CorsOptions = {
         'Access-Control-Allow-Headers',
         'Access-Control-Allow-Credentials',
         'Authorization',
+        'credentials'
     ],
     optionsSuccessStatus: 200,
     credentials: true,
-    // origin: `${process.env.ALLOWED_ORIGIN === 'dev'? "http://localhost:3001" : "https://afcon.sbme.ibrahimmohamed.online"}`,
+    origin: process.env.ALLOWED_ORIGIN,
     methods: ['GET','HEAD','OPTIONS','PUT','PATCH','POST','DELETE'],
 };
 
@@ -49,10 +51,7 @@ const limiter = rateLimit({
 });
 
 
-if (process.env.NODE_ENV == 'production') {
-    app.use(limiter);
-}
-
+app.use(limiter);
 
 
 app.use(morgan('dev'));
@@ -61,6 +60,7 @@ app.use(morgan('dev'));
 app.use(express.json({ limit: '10kb' }));
 
 app.use(cookieParser());
+
 // data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 
@@ -71,14 +71,7 @@ app.use(hpp());
 
 // Global Middleware
 app.use((req :Request, res :Response, next: NextFunction) => {
-    let allowedOrigin: string = ''
-    if (process.env.ALLOWED_ORIGIN === 'dev') {
-        allowedOrigin = 'http://localhost:3001'
-    }
-    else {
-        allowedOrigin = 'https://afcon.sbme.ibrahimmohamed.online'
-    }
-    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+    res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN!);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");

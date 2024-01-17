@@ -17,17 +17,6 @@ const signToken = (id: string) => {
 const createSendToken = (user: any, statusCode: number, res: Response) => {
     const token = signToken(user._id);
 
-    const cookieOptions = {
-        expires: new Date(Date.now() + parseInt(process.env.JWT_COOKIE_EXPIRES_IN!)* 24 * 60 * 60 * 1000),
-        httpOnly: true,
-        secure: false
-    };
-
-    // if we are in production mode, we need to set the cookie to be secure
-    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
-    res.cookie('jwt', token, cookieOptions);
-
     // Remove password from output
     user.password = undefined;
 

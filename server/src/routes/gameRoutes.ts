@@ -13,4 +13,7 @@ gameRouter.route("/update-score/:matchId")
 gameRouter.route("/leaderboard")
     .get(gameController.getLeaderboard);
 
+gameRouter.route("/my-score")
+    .get(authController.protect, gameController.getMyScore);
+
 export default gameRouter;

@@ -136,6 +136,13 @@ export const getLeaderboard = asyncErrorCatching(async (req: Request, res: Respo
 
 });
 
+export const getMyScore = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
+    return res.status(200).json({
+        status: 'success',
+        data: req.user.score
+    });
+});
+
 const calculateBonus = (matchPredictions: any, winner: string) => {
     let bonusFactor = 1;
 
@@ -157,5 +164,6 @@ const calculateBonus = (matchPredictions: any, winner: string) => {
 export default {
     predict,
     updateScoreAfterMatch,
-    getLeaderboard
+    getLeaderboard,
+    getMyScore
 }

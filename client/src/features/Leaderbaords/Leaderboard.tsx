@@ -1,11 +1,10 @@
-import { useLoaderData } from 'react-router-dom';
-import { getLeaderboard } from "../../services/apiGame.ts"
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import {useLoaderData} from 'react-router-dom';
+import {getLeaderboard} from "../../services/apiGame.ts"
+import {getScore} from "../../services/apiGame"
 
 const Leaderboard = () => {
 
-    const leaderboards: any = useLoaderData();
-    const userData: any = useAuthUser();
+    const {leaderboards, score}: any = useLoaderData();
 
     return (
         <div className="px-4 sm:px-6 lg:px-8">
@@ -18,13 +17,13 @@ const Leaderboard = () => {
                 </div>
 
                 {
-                    userData &&
-                    <div className="sm:flex-auto text-left sm:text-right">
-                        <h1 className="text-base font-semibold leading-6 text-gray-900">Your Score is</h1>
-                        <p className="mt-2 text-sm text-gray-700">
-                            {userData.score}
-                        </p>
-                    </div>
+                    score ?
+                        (<div className="sm:flex-auto text-left sm:text-right">
+                            <h1 className="text-base font-semibold leading-6 text-gray-900">Your Score is</h1>
+                            <p className="mt-2 text-sm text-gray-700">
+                                {score}
+                            </p>
+                        </div>) : ""
                 }
             </div>
             <div className="mt-8 flow-root">
@@ -56,7 +55,7 @@ const Leaderboard = () => {
                                 {leaderboards.map((person: any, index: number) => (
                                     <tr key={index}>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                            {index + 1 === 1? "🏆": (index + 1) }
+                                            {index + 1 === 1 ? "🏆" : (index + 1)}
                                         </td>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                             {person.name}
@@ -78,7 +77,9 @@ const Leaderboard = () => {
 }
 
 export const loader = async () => {
-    return await getLeaderboard()
+    const leaderboards = await getLeaderboard()
+    const score = await getScore()
+    return {leaderboards, score}
 }
 
 export default Leaderboard
