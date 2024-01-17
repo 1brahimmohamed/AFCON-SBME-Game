@@ -1,42 +1,47 @@
 import {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import useSignIn from "react-auth-kit/hooks/useSignIn";
-import {login} from "../../../services/apiAuth";
+import {Link, useLoaderData, useNavigate} from "react-router-dom";
+import {checkIfResetTokenExists, resetPassword} from "../../../services/apiAuth";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-export default function LoginPage() {
+const ResetPasswordPage = () => {
+
+    const  data : any = useLoaderData();
+
+    const token = data.token;
+    const name = data.name;
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [formData, setFormData] = useState({
-        email: '',
         password: '',
+        passwordConfirm: ''
     });
 
     const navigate = useNavigate();
-    const signIn = useSignIn();
 
-    const emailChangeHandler = (event: any) => {
-        setFormData({
-            ...formData,
-            email: event.target.value
-        })
-    };
 
     const passwordChangeHandler = (event: any) => {
         setFormData({
             ...formData,
             password: event.target.value
-        });
+        })
     };
+
+    const passwordConfirmChangeHandler = (event: any) => {
+        setFormData({
+            ...formData,
+            passwordConfirm: event.target.value
+        })
+    };
+
 
     const submitHandler = async (event: any) => {
         event.preventDefault();
 
-        if (formData.email === '' || formData.password === '') {
+        if (formData.password === '' || formData.passwordConfirm === '') {
             withReactContent(Swal).fire({
-                text: "Please fill all the fields!",
+                text: "Please fill all fields!",
                 icon: "error",
                 confirmButtonColor: "#fa0505",
                 timer: 1500
@@ -46,33 +51,23 @@ export default function LoginPage() {
 
         setIsSubmitting(true);
 
-        const res = await login(formData);
+        const res = await resetPassword(formData, token);
 
         setIsSubmitting(false);
 
         if (res.status === "success") {
-            if (
-                signIn({
-                    auth: {
-                        token: res.data.token,
-                        type: "Bearer",
-                    },
-                    userState: res.data.data.user
-                })
-            ) {
 
-                // fire swal and redirect
-                withReactContent(Swal).fire({
-                    text: "Login Successful!",
-                    icon: "success",
-                    confirmButtonColor: "#002c1e",
-                    timer: 1500
-                })
+            // fire swal and redirect
+            withReactContent(Swal).fire({
+                text: res.message,
+                icon: "success",
+                confirmButtonColor: "#002c1e",
+                timer: 1500
+            })
 
-                setTimeout(() => {
-                    navigate('/today-matches');
-                }, 2000)
-            }
+            setTimeout(() => {
+                navigate('/auth/login');
+            }, 2000)
         } else {
             withReactContent(Swal).fire({
                 text: res.message,
@@ -81,7 +76,8 @@ export default function LoginPage() {
                 timer: 1500
             })
         }
-    };
+    }
+
 
     return (
         <>
@@ -96,7 +92,7 @@ export default function LoginPage() {
                         />
                     </Link>
                     <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Sign in to your account
+                        Hey {name}, Reset your password
                     </h2>
                 </div>
 
@@ -106,23 +102,6 @@ export default function LoginPage() {
                         <form className="space-y-6">
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Email address
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        autoComplete="email"
-                                        required
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-AAPrimary sm:text-sm sm:leading-6"
-                                        onChange={emailChangeHandler}
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                                     Password
                                 </label>
                                 <div className="mt-2">
@@ -130,26 +109,29 @@ export default function LoginPage() {
                                         id="password"
                                         name="password"
                                         type="password"
-                                        autoComplete="current-password"
+                                        autoComplete="password"
                                         required
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-AAPrimary sm:text-sm sm:leading-6"
                                         onChange={passwordChangeHandler}
                                     />
                                 </div>
                             </div>
-
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center">
-
-                                </div>
-
-                                <div className="text-sm leading-6">
-                                    <Link to="/auth/forget-password" className="font-semibold text-AAPrimary hover:text-AAPrimaryLight">
-                                        Forgot password?
-                                    </Link>
+                            <div>
+                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                                    Password Confirm
+                                </label>
+                                <div className="mt-2">
+                                    <input
+                                        id="passwordConfirm"
+                                        name="passwordConfirm"
+                                        type="password"
+                                        autoComplete="passwordConfirm"
+                                        required
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-AAPrimary sm:text-sm sm:leading-6"
+                                        onChange={passwordConfirmChangeHandler}
+                                    />
                                 </div>
                             </div>
-
 
                             <div>
                                 <button
@@ -158,19 +140,11 @@ export default function LoginPage() {
                                     onClick={submitHandler}
                                     className="flex w-full disabled:bg-gray-400 justify-center rounded-md bg-AAPrimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-AAPrimaryDark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    Sign in
+                                    Submit
                                 </button>
                             </div>
                         </form>
                     </div>
-
-                    <p className="mt-10 text-center text-sm text-gray-500">
-                        Not a member?{' '}
-                        <Link to="/auth/register"
-                              className="font-semibold leading-6 text-AAPrimary hover:text-AAPrimaryLight">
-                            Bethazr .. Sign up now w not ya m3lem
-                        </Link>
-                    </p>
                 </div>
 
                 <div className="sm:mx-auto sm:w-full sm:max-w-md mt-6 space-y-6">
@@ -179,7 +153,7 @@ export default function LoginPage() {
                         Sponsored by
                     </h6>
                     <Link to={"https://edu.ieee.org/eg-cu-embs/"} target={"_blank"}>
-                    <img
+                        <img
                             className="mx-auto h-8 w-auto"
                             src="https://i.postimg.cc/Dycj2J3N/3rd.png"
                             alt="SBME CAN 2024"
@@ -191,3 +165,21 @@ export default function LoginPage() {
         </>
     )
 }
+
+
+export const loader = async ({params}: { params: any }) => {
+    // get the url param
+    const {token} = params;
+
+    const data : any = await checkIfResetTokenExists(token)
+
+    if (data.status === "success") {
+        return {
+            token: token,
+            name: data.data.name
+        }
+    } else {
+        throw new Error(data.message);
+    }
+};
+export default ResetPasswordPage;

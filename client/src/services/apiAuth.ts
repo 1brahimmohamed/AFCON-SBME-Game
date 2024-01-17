@@ -51,3 +51,66 @@ export const register = async (formData: any) => {
         }
     }
 };
+
+export const forgotPassword = async (formData: any) => {
+    try {
+        const res = await axios.post(`${API_URL}/forgot-password`, {
+            email: formData.email,
+        });
+
+        const {data} = res;
+
+        return {
+            "status": "success",
+            data
+        };
+
+    } catch (e: any) {
+        return {
+            "status": "error",
+            "message": e.response.data.message
+        }
+    }
+};
+
+
+export const resetPassword = async (formData: any, token: string) => {
+    try {
+        const res = await axios.patch(`${API_URL}/reset-password/${token}`, {
+            password: formData.password,
+            passwordConfirm: formData.passwordConfirm,
+        });
+
+        const {data} = res;
+
+        return {
+            "status": "success",
+            data: data.data
+        };
+
+    } catch (e: any) {
+        return {
+            "status": "error",
+            "message": e.response.data.message,
+        }
+    }
+};
+
+export const checkIfResetTokenExists = async (token: string) => {
+    try {
+        const res = await axios.get(`${API_URL}/check-reset-token/${token}`);
+
+        const {data} = res;
+
+        return {
+            "status": "success",
+            data: data.data
+        };
+
+    } catch (e: any) {
+        return {
+            "status": "error",
+            "message": e.response.data.message,
+        }
+    }
+};

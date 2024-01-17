@@ -1,6 +1,6 @@
 import {Schema, model,  models} from "mongoose";
 import validator from 'validator';
-
+import * as crypto from "crypto";
 export interface IUser {
     name: string;
     email: string;
@@ -10,6 +10,8 @@ export interface IUser {
     role: string;
     score: number;
     predictions: Schema.Types.ObjectId[];
+    passwordResetToken: string;
+    passwordResetExpires: Date;
 }
 
 export interface IUserDocument extends IUser, Document {
@@ -54,10 +56,26 @@ const UserSchema = new Schema<IUserDocument>({
         type: [Schema.Types.ObjectId],
         ref: 'Prediction',
         default: []
-    }
+    },
+    passwordResetToken: String,
+    passwordResetExpires: Date,
 }, {
     timestamps: true
 })
+
+
+UserSchema.methods.createPasswordResetToken = function () {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    this.passwordResetToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
+
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+    return resetToken;
+}
 
 const User = models.User || model<IUserDocument>('User', UserSchema)
 

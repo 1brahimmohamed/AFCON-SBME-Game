@@ -73,7 +73,7 @@ app.use(hpp());
 app.use((req :Request, res :Response, next: NextFunction) => {
     res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN!);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT, PATCH");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
     next();
 })

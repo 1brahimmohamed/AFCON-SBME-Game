@@ -1,4 +1,4 @@
-import mailTemplate from './emialTemplate';
+import mailTemplate from './emailTemplate';
 import transporter from './nodemailerTransporter';
 
 

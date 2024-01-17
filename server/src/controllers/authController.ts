@@ -1,11 +1,13 @@
 import User from "../models/userModel";
 import asyncErrorCatching from "../utils/asyncErrorCatching";
-import {Request, Response, NextFunction } from "express";
+import {Request, Response, NextFunction} from "express";
 import errorHandler from "../utils/errorHandler";
+import * as crypto from "crypto";
 
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import sendEmailHandler from "../utils/Email/sendMail";
+import sendResetMail from "../utils/resetEmail/sendResetMail";
 
 
 const signToken = (id: string) => {
@@ -30,7 +32,7 @@ const createSendToken = (user: any, statusCode: number, res: Response) => {
 };
 
 const login = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
-    const { email, password } = req.body;
+    const {email, password} = req.body;
 
     if (!email || !password) {
         return res
@@ -41,10 +43,10 @@ const login = asyncErrorCatching(async (req: Request, res: Response, next: NextF
             });
     }
 
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({email}).select('+password');
 
     if (!user) {
-       return next(new errorHandler('Invalid credentials', 404));
+        return next(new errorHandler('Invalid credentials', 404));
     }
 
     const isMatch = await bycrypt.compare(password, user.password);
@@ -56,7 +58,7 @@ const login = asyncErrorCatching(async (req: Request, res: Response, next: NextF
 })
 
 const signup = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
-    const { name, email, password, passwordConfirm, team, year } = req.body;
+    const {name, email, password, passwordConfirm, team, year} = req.body;
 
     if (!name || !email || !password || !passwordConfirm) {
         return next(new errorHandler('Please provide all the required fields', 400));
@@ -71,7 +73,7 @@ const signup = asyncErrorCatching(async (req: Request, res: Response, next: Next
     }
 
     // check if the user already exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({email});
 
     if (existingUser) {
         return res
@@ -132,7 +134,7 @@ const protect = asyncErrorCatching(async (req: Request, res: Response, next: Nex
         return next(new errorHandler('You are not logged in! Please log in to get access.', 401));
 
     // Verify the token
-    const decoded : any = jwt.verify(token, process.env.JWT_SECRET!);
+    const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
 
     console.log(decoded);
 
@@ -160,10 +162,102 @@ const restrictTo = (...roles: string[]) => {
     }
 }
 
+
+const forgotPassword = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
+
+    const {email} = req.body;
+
+    const user = await User.findOne({email});
+
+    if (!user) return next(new errorHandler('There is no user with email address.', 404));
+
+    const resetToken = user.createPasswordResetToken();
+
+    await user.save({validateBeforeSave: false});
+
+    const resetURL = `${req.protocol}://${req.get('host')}/auth/reset-password/${resetToken}`;
+
+    try {
+        await sendResetMail(user, resetURL);
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Token sent to email!'
+        });
+
+    } catch (err) {
+        user.passwordResetToken = undefined;
+        user.passwordResetExpires = undefined;
+        await user.save({validateBeforeSave: false});
+        return next(
+            new errorHandler(
+                'There was an error sending the email. Try again later!',
+                500
+            )
+        );
+    }
+});
+
+const resetPassword = asyncErrorCatching(async (req, res, next) => {
+
+    const hashedToken = crypto
+        .createHash('sha256')
+        .update(req.params.token)
+        .digest('hex');
+
+    const user = await User.findOne({
+        passwordResetToken: hashedToken,
+        passwordResetExpires: {$gt: Date.now()}
+    });
+
+
+    if (!user) return next(new errorHandler('Token is invalid or has expired', 400));
+
+    // hash the new password
+    const hashedPassword = await bycrypt.hash(req.body.password, 12);
+
+    user.password = hashedPassword;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+
+    await user.save();
+
+    res.status(200).json({
+        status: 'success',
+        message: 'Password changed successfully, you can log in now'
+    });
+});
+
+const checkIfResetTokenExists = asyncErrorCatching(async (req, res, next) => {
+
+    const hashedToken = crypto
+        .createHash('sha256')
+        .update(req.params.token)
+        .digest('hex');
+
+    const user = await User.findOne({
+        passwordResetToken: hashedToken,
+        passwordResetExpires: {$gt: Date.now()}
+    });
+
+    if (!user) return next(new errorHandler('Token is invalid or has expired', 400));
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            name: user.name,
+        }
+    });
+});
+
+
 export default {
     signup,
     login,
     logout,
     protect,
     restrictTo,
+    forgotPassword,
+    resetPassword,
+    checkIfResetTokenExists
 };
