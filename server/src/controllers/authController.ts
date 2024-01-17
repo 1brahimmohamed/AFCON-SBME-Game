@@ -175,7 +175,7 @@ const forgotPassword = asyncErrorCatching(async (req: Request, res: Response, ne
 
     await user.save({validateBeforeSave: false});
 
-    const resetURL = `${req.protocol}://${req.get('host')}/auth/reset-password/${resetToken}`;
+    const resetURL = `${req.protocol}://afcon.sbme.ibrahimmohamed.online/auth/reset-password/${resetToken}`;
 
     try {
         await sendResetMail(user, resetURL);
