@@ -79,7 +79,7 @@ const ForgetPasswordPage = () => {
                         />
                     </Link>
                     <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Forget Your Password?
+                        Forgot Your Password?
                     </h2>
                 </div>
 
