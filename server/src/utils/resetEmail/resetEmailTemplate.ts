@@ -149,7 +149,7 @@ const resetMailTemplate = (email: string, name: string, url: string) => {
     
                           
                                  
-                                  <h2 class="form-title">Reset Your Password Service</h2>
+                                <h2 class="form-title">URL is only valid for 10 mintus only</h2>
     
                                 <div class="form-container">
                                   <h3 class="form-heading">Name</h3>

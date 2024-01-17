@@ -11,7 +11,7 @@ const AllMatches = () => {
         <div className="p-5">
             {
                 matches.length > 0 ? (
-                    <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
                         {matches.map((match: any) => (
                             <AllMatchCard key={match._id} match={match}/>
                         ))}

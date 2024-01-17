@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import AppLayout from "./ui/layouts/AppLayout";
-import AdminLayout from "./ui/layouts/AdminLayout.tsx";
+// import AdminLayout from "./ui/layouts/AdminLayout.tsx";
 
 import LoginPage from "./features/Auth/login/LoginPage";
 import RegisterPage from "./features/Auth/register/RegisterPage";
@@ -15,7 +15,7 @@ import NotFount from "./ui/404.tsx";
 import Rules from "./ui/Rules.tsx";
 
 import AllMatches, { loader as allMatchesLoader } from "./features/Matches/AllMatches/AllMatches";
-import AllUsers, {loader as allUsersLoader} from "./features/Admin/Users/AllUsers.tsx";
+// import AllUsers, {loader as allUsersLoader} from "./features/Admin/Users/AllUsers.tsx";
 import ForgetPasswordPage from "./features/Auth/forget/ForgetPasswordPage.tsx";
 import ResetPasswordPage, {loader as checkTokenLoader} from "./features/Auth/reset/ResetPasswordPage.tsx";
 import TokenError from "./ui/TokenError.tsx";
@@ -57,21 +57,21 @@ const router = createBrowserRouter([
             }
         ],
     },
-    {
-        element: <AdminLayout />,
-        errorElement: <Error />,
-        children: [
-            {
-                path: '/admin',
-                index: true,
-            },
-            {
-                path: '/admin/users',
-                element: <AllUsers />,
-                loader: allUsersLoader
-            }
-        ]
-    },
+    // {
+    //     element: <AdminLayout />,
+    //     errorElement: <Error />,
+    //     children: [
+    //         {
+    //             path: '/admin',
+    //             index: true,
+    //         },
+    //         {
+    //             path: '/admin/users',
+    //             element: <AllUsers />,
+    //             loader: allUsersLoader
+    //         }
+    //     ]
+    // },
     {
         path: '/auth/login',
         element: <LoginPage />
