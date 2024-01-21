@@ -87,7 +87,7 @@ export const deleteMatch = asyncErrorCatching(async (req: Request, res: Response
 
 export const getTodayMatches = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
     const matches = await Match.find({});
-    const todayMatches = matches.filter(match => match.startTime.getDate() === new Date().getDate());
+    const todayMatches = matches.filter(match => match.startTime.getDate() === new Date(Date.now()).getDate());
 
     if (!todayMatches) {
         return next(new errorHandler('There is no matches today', 404));
