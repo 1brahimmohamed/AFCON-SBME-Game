@@ -15,9 +15,27 @@ const MatchPredictions = () => {
     const total = teamA.count + teamB.count + draw.count
 
     const stats = [
-        {name: teams.teamA, value: teamA.count, percentage: Math.round((teamA.count / total) * 100) ,  unit: 'vote', label: teams.teamA},
-        {name: 'Draw', value: draw.count, percentage: Math.round((draw.count / total) * 100) , unit: 'vote', label: 'Draw'},
-        {name: teams.teamB, value: teamB.count, percentage: Math.round((teamB.count / total) * 100) , unit: 'vote', label: teams.teamB},
+        {
+            name: teams.teamA,
+            value: teamA.count,
+            percentage: Math.round((teamA.count / total) * 100),
+            unit: 'vote',
+            label: teams.teamA
+        },
+        {
+            name: 'Draw',
+            value: draw.count,
+            percentage: Math.round((draw.count / total) * 100),
+            unit: 'vote',
+            label: 'Draw'
+        },
+        {
+            name: teams.teamB,
+            value: teamB.count,
+            percentage: Math.round((teamB.count / total) * 100),
+            unit: 'vote',
+            label: teams.teamB
+        },
     ]
 
     return (
@@ -53,6 +71,14 @@ const MatchPredictions = () => {
 
 export const loader = async ({params}: { params: any }) => {
     const {slug} = params
-    return await getMatchPrediction(slug)
+    const resp = await getMatchPrediction(slug)
+
+    if (resp.status === "success") {
+        return resp
+    }
+    else if (resp.status === "error" && resp.message === "You can not get Predictions until match starts") {
+        console.log(resp)
+        throw new Error(resp.message)
+    }
 }
 export default MatchPredictions

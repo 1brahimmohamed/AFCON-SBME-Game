@@ -161,9 +161,32 @@ const calculateBonus = (matchPredictions: any, winner: string) => {
 
     return bonusFactor;
 }
+
+export const getCorrectPredictionsForUser = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const predictions = await Prediction.find({ user: id });
+
+
+    if (!predictions) {
+        return next(new ErrorHandler('Predictions not found', 404));
+    }
+
+    // get the correct predictions for the user
+    let correctPredictions = predictions.filter((prediction: any) => prediction.predictedTeam === prediction.match.winner);
+
+    res
+        .status(200)
+        .json({
+            status: 'success',
+            results: correctPredictions.length,
+            data: correctPredictions
+        });
+})
+
 export default {
     predict,
     updateScoreAfterMatch,
     getLeaderboard,
-    getMyScore
+    getMyScore,
+    getCorrectPredictionsForUser
 }

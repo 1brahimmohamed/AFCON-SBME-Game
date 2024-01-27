@@ -16,4 +16,7 @@ gameRouter.route("/leaderboard")
 gameRouter.route("/my-score")
     .get(authController.protect, gameController.getMyScore);
 
+gameRouter.route("/correct-predictions/:id")
+    .get(authController.protect, authController.restrictTo('admin'), gameController.getCorrectPredictionsForUser);
+
 export default gameRouter;

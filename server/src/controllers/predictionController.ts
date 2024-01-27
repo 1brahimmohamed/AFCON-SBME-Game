@@ -5,7 +5,12 @@ import Match from "../models/matchModel";
 import ErrorHandler from "../utils/errorHandler";
 
 export const getAllPredictions = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
-    const predictions = await Prediction.find();
+        // check if there is a query string
+    let filter = {};
+    if (req.query) {
+        filter = { ...req.query };
+    }
+    const predictions = await Prediction.find(filter);
 
     res
         .status(200)
@@ -38,6 +43,15 @@ export const getMatchPredictions = asyncErrorCatching(async (req: Request, res: 
 
     // get the match
     const match = await Match.findOne({ slug });
+
+    if (!match) {
+        return next(new ErrorHandler('Match not found', 404));
+    }
+
+    // check if the match has already started
+    if (match.startTime > new Date(Date.now())) {
+        return next(new ErrorHandler('You can not get Predictions until match starts', 401));
+    }
 
     const predictions = await Prediction.find({ match: match?._id });
 
@@ -93,7 +107,6 @@ export const getMyPredictions = asyncErrorCatching(async (req: Request, res: Res
             data: predictions
         });
 })
-
 
 export const deletePrediction = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
