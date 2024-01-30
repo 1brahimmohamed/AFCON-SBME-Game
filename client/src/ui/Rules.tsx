@@ -1,5 +1,6 @@
 import {Disclosure} from '@headlessui/react'
 import {MinusSmallIcon, PlusSmallIcon} from '@heroicons/react/24/outline'
+import { PhoneIcon } from '@heroicons/react/24/outline'
 
 const RULES = [
     {
@@ -97,6 +98,17 @@ export default function Rules() {
                             </Disclosure>
                         ))}
                     </dl>
+                </div>
+                <div className={"flex justify-center my-10"}>
+                    <div className={"flex-col"}>
+                        <div className={"text-center"}>
+                            الشكاوى
+                        </div>
+                        <div className={"flex gap-x-3"}>
+                            <PhoneIcon className={"h-5 w-5 "} aria-hidden="true" />
+                            <p>900 804 304</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
