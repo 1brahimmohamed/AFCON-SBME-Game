@@ -25,7 +25,7 @@ const RULES = [
     {
         header: 'Bouns points',
         textDir: "ltr",
-        ruleStatement: "You get double the points if you predict a side with less than 25% votes & Triple the points if you predict a side with less than 10% votes."
+        ruleStatement: "You get double the points if you predict a side with less than or equal 25% of votes & Triple the points if you predict a side with less than or equal 10% of votes."
     },
     {
         header: "Score Calculation Time",
@@ -49,10 +49,10 @@ const RULES = [
 
 في درجات بونص .. طب ازاي؟ 
 
-الdouble لو توقعك صح و انت مختار فريق اقل من ٢٥% من الي الناس مختارينه
+الdouble لو توقعك صح و انت مختار فريق ثد او اقل من ٢٥% من الي الناس مختارينه
 و الtriple لو اقل من 10%
 
-يعني ايه؟ يعني لو مصر بتلعب و كلنا اختارنا مصر و في مجموعة اختارت موزانبيق و كان عددهم اقل من ٢٥% او ١٠% من توتال الاصوات بياخدو بونص
+يعني ايه؟ يعني لو مصر بتلعب و كلنا اختارنا مصر و في مجموعة اختارت موزانبيق و كان عددهم  قد او اقل من ٢٥% او ١٠% من توتال الاصوات بياخدو بونص
 
 طبعا مش لازم اقول ان الvote نهائي يعني لو عملته مرة لازم تكون متاكد منه و مفيش تعديل 
 و الvoting بيقفل لوحده اول مالماتش يبدء .. ماتشات اليوم بتظهر لوحدها اوتوماتيك المفروض الساعة ١٢ بليل و اليوم الي قبله بتتشال
