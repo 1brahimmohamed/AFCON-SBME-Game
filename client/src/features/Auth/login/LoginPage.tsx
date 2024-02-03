@@ -1,9 +1,11 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import {login} from "../../../services/apiAuth";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
+
 
 export default function LoginPage() {
 
@@ -82,6 +84,14 @@ export default function LoginPage() {
             })
         }
     };
+
+    const isAuthenticated = useIsAuthenticated();
+
+    useEffect(() => {
+        if (isAuthenticated()) {
+            navigate('/');
+        }
+    }, []);
 
     return (
         <>

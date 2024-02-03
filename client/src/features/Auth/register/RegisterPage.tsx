@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CountrySelectBox from "./CountrySelectBox.tsx";
 import { register } from "../../../services/apiAuth";
@@ -6,6 +6,7 @@ import { register } from "../../../services/apiAuth";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import ClassSelectBox from "./ClassSelectBox.tsx";
+import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 
 
 const errorAlert = (message: string) => (
@@ -27,6 +28,7 @@ const RegisterPage = () => {
         country: 'Egypt',
         class: 'SBME 2024'
     });
+
 
     const navigate = useNavigate();
 
@@ -51,6 +53,15 @@ const RegisterPage = () => {
             class: event.name
         })
     }
+
+    const isAuthenticated = useIsAuthenticated();
+
+    useEffect(() => {
+        if (isAuthenticated()) {
+            navigate('/');
+        }
+    }, []);
+
 
     const submitHandler = async (event: any) => {
         event.preventDefault();
