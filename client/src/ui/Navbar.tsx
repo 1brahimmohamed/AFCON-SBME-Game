@@ -12,6 +12,7 @@ const navigation = [
     {name: 'All Matches', href: '/all-matches'},
     {name: 'Leaderboards', href: '/leaderboards'},
     {name: 'Rules', href: '/rules'},
+    {name: 'Hall of Fame', href: '/hall-of-fame'},
 ]
 
 const Navbar = () => {
@@ -34,11 +35,11 @@ const Navbar = () => {
         <header className={`${location === '/' ? "absolute" : "bg-AAPrimaryDark mb-10"} inset-x-0 top-0 z-50`}>
             <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
-                    <Link to="/" className="-m-1.5 p-1.5">
+                    <Link to="/" className="-m-1.5 p-1">
                         <span className="sr-only">SBME CAN 2024</span>
                         <img
-                            className="h-10 w-auto"
-                            src="https://i.postimg.cc/5tHHf2tz/LOGOW.png"
+                            className="h-14 w-auto"
+                            src="/logo.png"
                             alt=""
                         />
                     </Link>

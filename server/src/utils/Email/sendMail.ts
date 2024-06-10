@@ -9,7 +9,7 @@ const sendEmailHandler = async (user: any) =>{
   const mailOptionsForUser = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: `Thank your for Registering in SBME AFCON 2024 Game`,
+    subject: `Thank your for Registering in SBME UEFA EURO 2024 Game`,
     text: `Hi ${user.name},\n\nThank you for joining the fun by SBME 2024`,
     html: mailTemplate(user.email, user.name , user.team, user.class)
   };

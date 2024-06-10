@@ -8,7 +8,7 @@ const MatchPredictions = () => {
 
     const prediction: any = useLoaderData();
 
-    const data = prediction.data.data
+    const data = prediction.data
 
     const {teamA, teamB, draw, teams} = data
 
@@ -73,12 +73,10 @@ export const loader = async ({params}: { params: any }) => {
     const {slug} = params
     const resp = await getMatchPrediction(slug)
 
-    if (resp.status === "success") {
-        return resp
-    }
-    else if (resp.status === "error" && resp.message === "You can not get Predictions until match starts") {
-        console.log(resp)
+    if (resp.status === "error" && resp.message === "You can not get Predictions until match starts") {
         throw new Error(resp.message)
     }
+
+    return resp.data
 }
 export default MatchPredictions

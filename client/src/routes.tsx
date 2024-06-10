@@ -19,6 +19,7 @@ import AllMatches, { loader as allMatchesLoader } from "./features/Matches/AllMa
 import ForgetPasswordPage from "./features/Auth/forget/ForgetPasswordPage.tsx";
 import ResetPasswordPage, {loader as checkTokenLoader} from "./features/Auth/reset/ResetPasswordPage.tsx";
 import TokenError from "./ui/TokenError.tsx";
+import HallOfFame from "./ui/HallOfFame.tsx";
 
 
 
@@ -54,24 +55,14 @@ const router = createBrowserRouter([
             {
                 path: '/rules',
                 element: <Rules />
+            },
+            {
+                path: '/hall-of-fame',
+                element: <HallOfFame />,
             }
         ],
     },
-    // {
-    //     element: <AdminLayout />,
-    //     errorElement: <Error />,
-    //     children: [
-    //         {
-    //             path: '/admin',
-    //             index: true,
-    //         },
-    //         {
-    //             path: '/admin/users',
-    //             element: <AllUsers />,
-    //             loader: allUsersLoader
-    //         }
-    //     ]
-    // },
+
     {
         path: '/auth/login',
         element: <LoginPage />

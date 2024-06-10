@@ -48,10 +48,10 @@ export const getMatchPredictions = asyncErrorCatching(async (req: Request, res: 
         return next(new ErrorHandler('Match not found', 404));
     }
 
-    // check if the match has already started
-    if (match.startTime > new Date(Date.now())) {
-        return next(new ErrorHandler('You can not get Predictions until match starts', 401));
-    }
+    // // check if the match has already started
+    // if (match.startTime > new Date(Date.now())) {
+    //     return next(new ErrorHandler('You can not get Predictions until match starts', 401));
+    // }
 
     const predictions = await Prediction.find({ match: match?._id });
 

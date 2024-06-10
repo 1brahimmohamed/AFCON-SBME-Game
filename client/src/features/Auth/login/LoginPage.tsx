@@ -101,7 +101,7 @@ export default function LoginPage() {
                     <Link to="/">
                         <img
                             className="mx-auto h-14 w-auto"
-                            src="https://i.postimg.cc/rmjPmKvg/LOGO.png"
+                            src="/color.png"
                             alt="SBME CAN 2024"
                         />
                     </Link>
