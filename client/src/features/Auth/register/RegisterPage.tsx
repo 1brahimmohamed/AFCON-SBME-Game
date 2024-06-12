@@ -15,7 +15,7 @@ const RegisterPage = () => {
         name: '',
         password: '',
         passwordConfirm: '',
-        country: 'Egypt',
+        country: 'France',
         class: 'SBME 2024'
     });
 
