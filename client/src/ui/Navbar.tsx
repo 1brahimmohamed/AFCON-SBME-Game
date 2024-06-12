@@ -93,7 +93,7 @@ const Navbar = () => {
                     className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-AAPrimaryDark px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
                     <div className="flex items-center justify-between">
                         <Link to="/" className="-m-1.5 p-1.5">
-                            <span className="sr-only">Your Company</span>
+                            <span className="sr-only">EMBS</span>
                             <img
                                 className="h-8 w-auto"
                                 src="https://i.postimg.cc/5tHHf2tz/LOGOW.png"
