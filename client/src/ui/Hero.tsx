@@ -10,7 +10,7 @@ const HomePage = () => {
     const onGetStarted = () => {
         // if user is logged in, redirect to dashboard
         // else redirect to login page
-        if (isAuthenticated()) {
+        if (isAuthenticated) {
             navigate('/today-matches');
         } else {
             navigate('/auth/register');
@@ -18,7 +18,7 @@ const HomePage = () => {
     };
 
     return (
-        <div className="bg-AAPrimaryLight">
+        <div className="bg-white">
 
             <div className="relative isolate overflow-hidden h-[100vh] pt-14">
                 <img

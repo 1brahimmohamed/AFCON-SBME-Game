@@ -66,7 +66,7 @@ const Navbar = () => {
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end text-sm font-semibold leading-6 text-white">
                     {
-                        isAuthenticated() ? (
+                        isAuthenticated ? (
                             <button onClick={logoutHandler} className={"hover:text-AASecondary"}>
                                 Logout
                             </button>
@@ -112,7 +112,7 @@ const Navbar = () => {
 
                     <div className="mt-6 flow-root">
                         {
-                            isAuthenticated() &&
+                            isAuthenticated &&
                             (
                                 <div
                                     className="-mx-3 block space-y-5 rounded-lg px-3 py-3 font-bold leading-7 text-white"
@@ -140,7 +140,7 @@ const Navbar = () => {
                             </div>
                             <div className="py-6">
                                 {
-                                    isAuthenticated() ? (
+                                    isAuthenticated ? (
                                         <button
                                             onClick={logoutHandler}
                                             className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-800"

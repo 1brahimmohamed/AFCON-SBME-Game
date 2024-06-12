@@ -6,13 +6,13 @@ export const getMatchPrediction = async (matchSlug: string) => {
     try {
         const res = await axios.get(`${API_URL}/match-predictions/${matchSlug}`);
 
-        const {data} = res;
+        const {data} = res.data;
 
 
         return {
-            "status": "success",
-            data
-        }
+            data,
+            results: res.data.results,
+        };
 
     } catch (e: any) {
         return {

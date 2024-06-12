@@ -2,12 +2,13 @@ import MatchTeam from './MatchTeam';
 import {useState} from 'react';
 import {FaCheck} from "react-icons/fa";
 import {FaPeopleGroup} from "react-icons/fa6";
-import { FaHandshake } from "react-icons/fa";
+import {FaHandshake} from "react-icons/fa";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import {predict} from '../../../services/apiGame';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import {useNavigate} from 'react-router-dom';
+import toast from "react-hot-toast";
 
 const convertDate = (date: string) => {
     const dateObj = new Date(date);
@@ -16,7 +17,7 @@ const convertDate = (date: string) => {
     if (minutes === 0)
         return `${hours}:00`
     else
-    return `${hours}:${minutes}`
+        return `${hours}:${minutes}`
 }
 
 const convertToProperString = (str: string) => {
@@ -24,11 +25,9 @@ const convertToProperString = (str: string) => {
 }
 
 const errorAlert = (message: string) => (
-    withReactContent(Swal).fire({
-        text: message,
-        icon: "error",
-        confirmButtonColor: "#fa0505",
-        timer: 2500
+    toast.error(message, {
+        duration: 4000,
+        position: 'bottom-center'
     })
 )
 
@@ -44,8 +43,7 @@ const MatchCard = ({match}: { match: any }) => {
 
     const handlePrediction = (selectedOption: string) => {
 
-        if (isAuthenticated()) {
-
+        if (isAuthenticated) {
             if (selectedTeam || selectedOption === "Draw") {
                 let prediction = selectedTeam;
 
@@ -67,25 +65,14 @@ const MatchCard = ({match}: { match: any }) => {
 
                         const res = await predict(prediction, match._id);
                         if (res.status === "success") {
-                            withReactContent(Swal).fire({
-                                title: "Prediction Successful",
-                                icon: "success",
-                                confirmButtonColor: "#002c1e",
-                                timer: 1500
-                            })
-                        }
-                        else {
-                            withReactContent(Swal).fire({
-                                title: res.message ,
-                                icon: "error",
-                                confirmButtonColor: "#fa0505",
-                                timer: 1500
-                            })
+                            toast.success('Prediction Successful', { duration: 1500, position: 'bottom-center' })
+                        } else {
+                            toast.error(res.message, { duration: 1500, position: 'bottom-center' })
                         }
                     }
                 })
             } else {
-                errorAlert('Please select a team first')
+                errorAlert('Please select a team to predict')
             }
         } else {
             errorAlert('You are not logged in, Please login to predict')
