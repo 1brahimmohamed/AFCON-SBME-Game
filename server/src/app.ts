@@ -33,7 +33,7 @@ const corsOptions: cors.CorsOptions = {
     ],
     optionsSuccessStatus: 200,
     credentials: true,
-    origin: process.env.ALLOWED_ORIGIN,
+    origin: "*",
     methods: ['GET','HEAD','OPTIONS','PUT','PATCH','POST','DELETE'],
 };
 
@@ -88,6 +88,7 @@ app.post("/api/v1/cron", (req: Request, res: Response) => {
         status: 'success',
         message: 'Cron Job is running'
     });
+    console.log('Cron Job is running');
 });
 
 app.options('*', cors(corsOptions));
