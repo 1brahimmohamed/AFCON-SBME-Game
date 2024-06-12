@@ -10,7 +10,9 @@ export const predict = async (selectedTeam: string, matchId: string) => {
             selectedTeam: selectedTeam
         }, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('_auth')}`
+                Authorization: `Bearer ${localStorage.getItem('_auth')}`,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": "true",
             }
         });
 
@@ -29,14 +31,14 @@ export const predict = async (selectedTeam: string, matchId: string) => {
 }
 
 
-export const getLeaderboard = async() => {
+export const getLeaderboard = async () => {
     const res = await axios.get(`${API_URL}/leaderboard`);
 
     if (!res.data) {
         throw new Error("Failed to fetch leaderboard");
     }
 
-    const { data } = res;
+    const {data} = res;
 
 
     return data.data;
@@ -54,8 +56,7 @@ export const getScore = async () => {
         const {data} = res;
 
         return data.data;
-    }
-    catch (e: any) {
+    } catch (e: any) {
         return null
     }
 };
