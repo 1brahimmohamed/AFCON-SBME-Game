@@ -40,7 +40,7 @@ const Navbar = () => {
                         <img
                             className="h-14 w-auto"
                             src="/logo.png"
-                            alt=""
+                            alt="logo"
                         />
                     </Link>
                 </div>
@@ -96,8 +96,8 @@ const Navbar = () => {
                             <span className="sr-only">EMBS</span>
                             <img
                                 className="h-8 w-auto"
-                                src="https://i.postimg.cc/5tHHf2tz/LOGOW.png"
-                                alt=""
+                                src="/logo.png"
+                                alt="logo"
                             />
                         </Link>
                         <button
