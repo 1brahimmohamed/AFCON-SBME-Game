@@ -3,7 +3,7 @@ import {PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 const MatchPieChart = ({data}: { data: any }) => {
     return (
         <PieChart
-            colors={['#004634', '#ff7900', '#9ca3af']} // Use palette
+            colors={['#003366', '#9ca3af', '#66ccff']} // Use palette
             series={[
                 {
                     arcLabel: (item) => { if (item.percentage === 0) return ''; return item.percentage + '%'; },
