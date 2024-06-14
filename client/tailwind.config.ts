@@ -14,12 +14,12 @@ const config: Config = {
       },
 
       colors: {
-        AAPrimary: '#004634',
-        AAPrimaryLight: '#015b32',
-        AAPrimaryDark: '#002c1e',
-        AASecondary: '#ff7900',
-        AASecondaryLight: '#ff9d32',
-        AASecondaryDark: '#ff4c00',
+        AAPrimary: '#003366',         /* A dark blue shade */
+        AAPrimaryLight: '#143cda',    /* A lighter blue shade */
+        AAPrimaryDark: '#000d40',     /* A darker blue shade */
+        AASecondary: '#66CCFF',
+        AASecondaryLight: '#80BFFF',
+        AASecondaryDark: '#336699',
       },
     },
   },

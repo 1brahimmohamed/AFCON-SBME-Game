@@ -1,11 +1,22 @@
 import AllMatchCard from './AllMatchCard.tsx'
 import { getAllMatches } from '../../../services/apiMatches'
-import { useLoaderData } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import Loading from "../../../ui/Loading.tsx";
 
 const AllMatches = () => {
 
-    const matches: any = useLoaderData();
+    const { data: matches, isLoading, isLoadingError } = useQuery({
+        queryKey: ['all-matches'],
+        queryFn: getAllMatches,
+    });
 
+    if (isLoading) {
+        return <Loading />;
+    }
+
+    if (isLoadingError) {
+       throw new Error('Something went wrong .. Please try again later');
+    }
 
     return (
         <div className="p-5">
@@ -24,10 +35,6 @@ const AllMatches = () => {
             }
         </div>
     )
-}
-
-export const loader = async() => {
-    return await getAllMatches();
 }
 
 export default AllMatches

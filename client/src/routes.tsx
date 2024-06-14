@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import {createBrowserRouter} from "react-router-dom";
 
 import AppLayout from "./ui/layouts/AppLayout";
 // import AdminLayout from "./ui/layouts/AdminLayout.tsx";
@@ -6,93 +6,94 @@ import AppLayout from "./ui/layouts/AppLayout";
 import LoginPage from "./features/Auth/login/LoginPage";
 import RegisterPage from "./features/Auth/register/RegisterPage";
 import HomePage from "./ui/Hero";
-import Leaderboard, { loader as LeaderbaordsLoader } from "./features/Leaderbaords/Leaderboard";
-import TodayMatches, { loader as todayMatchesLoader } from "./features/Matches/TodayMatches/TodayMatches";
-import MatchPredictions, {loader as matchPredictionLoader} from "./features/Matches/MatchPredictions/MatchPredictions";
+import Leaderboard from "./features/Leaderbaords/Leaderboard";
+import TodayMatches from "./features/Matches/TodayMatches/TodayMatches";
+import MatchPredictions from "./features/Matches/MatchPredictions/MatchPredictions";
 
 import Error from "./ui/Error";
 import NotFount from "./ui/404.tsx";
 import Rules from "./ui/Rules.tsx";
 
-import AllMatches, { loader as allMatchesLoader } from "./features/Matches/AllMatches/AllMatches";
+import AllMatches from "./features/Matches/AllMatches/AllMatches";
 // import AllUsers, {loader as allUsersLoader} from "./features/Admin/Users/AllUsers.tsx";
 import ForgetPasswordPage from "./features/Auth/forget/ForgetPasswordPage.tsx";
 import ResetPasswordPage, {loader as checkTokenLoader} from "./features/Auth/reset/ResetPasswordPage.tsx";
 import TokenError from "./ui/TokenError.tsx";
+import HallOfFame from "./ui/HallOfFame.tsx";
 
+import AuthOutlet from '@auth-kit/react-router/AuthOutlet';
 
 
 const router = createBrowserRouter([
     {
-        element: <AppLayout />,
-        errorElement: <Error />,
+        path: '/',
+        element: <AppLayout/>,
         children: [
             {
                 path: '/',
-                element: <HomePage />,
-            },
-            {
-                path: '/leaderboards',
-                element: <Leaderboard />,
-                loader: LeaderbaordsLoader
-            },
-            {
-                path: "today-matches",
-                element: <TodayMatches />,
-                loader: todayMatchesLoader
-            },
-            {
-                path: "all-matches",
-                element: <AllMatches />,
-                loader: allMatchesLoader
-            },
-            {
-                path: "match/:slug",
-                element: <MatchPredictions />,
-                loader: matchPredictionLoader
+                element: <HomePage/>,
             },
             {
                 path: '/rules',
-                element: <Rules />
+                element: <Rules/>
+            },
+            {
+                path: '/hall-of-fame',
+                element: <HallOfFame/>,
             }
-        ],
+        ]
     },
-    // {
-    //     element: <AdminLayout />,
-    //     errorElement: <Error />,
-    //     children: [
-    //         {
-    //             path: '/admin',
-    //             index: true,
-    //         },
-    //         {
-    //             path: '/admin/users',
-    //             element: <AllUsers />,
-    //             loader: allUsersLoader
-    //         }
-    //     ]
-    // },
+    {
+        path: '/',
+        element: <AuthOutlet fallbackPath={'/auth/login'}/>,
+        children: [
+            {
+                element: <AppLayout/>,
+                errorElement: <Error/>,
+                children: [
+                    {
+                        path: '/leaderboards',
+                        element: <Leaderboard/>,
+                    },
+                    {
+                        path: "today-matches",
+                        element: <TodayMatches/>,
+                    },
+
+                    {
+                        path: "all-matches",
+                        element: <AllMatches/>,
+                    },
+                    {
+                        path: "match/:slug",
+                        element: <MatchPredictions/>,
+                    },
+                ],
+            }
+        ]
+    },
+
     {
         path: '/auth/login',
-        element: <LoginPage />
+        element: <LoginPage/>
     },
     {
         path: '/auth/register',
-        element: <RegisterPage />
+        element: <RegisterPage/>
     },
     {
         path: '/auth/forget-password',
-        element: <ForgetPasswordPage />
+        element: <ForgetPasswordPage/>
     },
     {
         path: '/auth/reset-password/:token',
-        element: <ResetPasswordPage />,
+        element: <ResetPasswordPage/>,
         loader: checkTokenLoader,
-        errorElement: <TokenError />
+        errorElement: <TokenError/>
     },
     {
         path: '*',
-        element: <NotFount />
+        element: <NotFount/>
     },
 ]);
 

@@ -1,10 +1,35 @@
-import {useLoaderData} from 'react-router-dom';
 import {getLeaderboard} from "../../services/apiGame.ts"
 import {getScore} from "../../services/apiGame"
+import Loading from "../../ui/Loading.tsx";
+import {useQuery} from '@tanstack/react-query';
 
 const Leaderboard = () => {
 
-    const {leaderboards, score}: any = useLoaderData();
+    const {
+        data: leaderboards,
+        isLoading: isLeaderboardsLoading,
+        isLoadingError: isLeaderboardsLoadingError
+    } = useQuery({
+        queryKey: ['leaderboards'],
+        queryFn: getLeaderboard,
+    });
+
+    const {
+        data: score,
+        isLoading: isScoreLoading,
+    } = useQuery({
+        queryKey: ['score'],
+        queryFn: getScore,
+    });
+
+
+    if (isLeaderboardsLoading || isScoreLoading) {
+        return <Loading/>;
+    }
+
+    if (isLeaderboardsLoadingError) {
+        throw new Error('Something went wrong .. Please try again later');
+    }
 
     return (
         <div className="px-4 sm:px-6 lg:px-8">
@@ -74,12 +99,6 @@ const Leaderboard = () => {
             </div>
         </div>
     )
-}
-
-export const loader = async () => {
-    const leaderboards = await getLeaderboard()
-    const score = await getScore()
-    return {leaderboards, score}
 }
 
 export default Leaderboard

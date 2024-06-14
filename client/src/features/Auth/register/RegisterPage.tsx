@@ -1,22 +1,12 @@
 import {useEffect, useState} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import CountrySelectBox from "./CountrySelectBox.tsx";
-import { register } from "../../../services/apiAuth";
-
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import {register} from "../../../services/apiAuth";
 import ClassSelectBox from "./ClassSelectBox.tsx";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+import toast from "react-hot-toast";
 
 
-const errorAlert = (message: string) => (
-    withReactContent(Swal).fire({
-        text: message,
-        icon: "error",
-        confirmButtonColor: "#fa0505",
-        timer: 2500
-    })
-)
 
 const RegisterPage = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,7 +15,7 @@ const RegisterPage = () => {
         name: '',
         password: '',
         passwordConfirm: '',
-        country: 'Egypt',
+        country: 'France',
         class: 'SBME 2024'
     });
 
@@ -57,7 +47,7 @@ const RegisterPage = () => {
     const isAuthenticated = useIsAuthenticated();
 
     useEffect(() => {
-        if (isAuthenticated()) {
+        if (isAuthenticated) {
             navigate('/');
         }
     }, []);
@@ -68,24 +58,24 @@ const RegisterPage = () => {
 
 
         if (formData.name === '' || formData.email === '' || formData.password === '' || formData.passwordConfirm === '') {
-            errorAlert('Please fill all fields')
+            toast.error("Please fill all fields", {duration: 2500, position: 'bottom-center'})
             return;
         }
 
         if (formData.password.length < 6) {
-            errorAlert('Password must be at least 6 characters')
+            toast.error("Password must be at least 6 characters", {duration: 2500, position: 'bottom-center'})
             return;
         }
 
         // check if passwords match
         if (formData.password !== formData.passwordConfirm) {
-            errorAlert('Passwords do not match')
+            toast.error("Passwords do not match", {duration: 2500, position: 'bottom-center'})
             return;
         }
 
         // check if email is @eng-st
         if (!formData.email.includes('@eng-st')) {
-            errorAlert('Only @eng-st.cu.edu.eg emails are allowed')
+            toast.error("Only @eng-st.cu.edu.eg emails are allowed", {duration: 2500, position: 'bottom-center'})
             return;
         }
 
@@ -97,20 +87,14 @@ const RegisterPage = () => {
 
         if (res.status === "success") {
 
-            withReactContent(Swal).fire({
-                text: "Register Successful .. Login Now !",
-                icon: "success",
-                confirmButtonColor: "#002c1e",
-                timer: 1500
-            })
+            toast.success("Register Successful .. Login Now !", {duration: 2000, icon: '🚀'})
 
             setTimeout(() => {
                 navigate('/auth/login');
             }, 2000)
 
-        }
-        else{
-            errorAlert(res.message || 'Something went wrong')
+        } else {
+            toast.success(res.message || "Something went wrong", {duration: 2000})
         }
 
     };
@@ -123,7 +107,7 @@ const RegisterPage = () => {
                     <Link to="/">
                         <img
                             className="mx-auto h-14 w-auto"
-                            src="https://i.postimg.cc/rmjPmKvg/LOGO.png"
+                            src="/color.png"
                             alt="SBME CAN 2024"
                         />
                     </Link>
@@ -193,7 +177,8 @@ const RegisterPage = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="passwordConfirm" className="block text-sm font-medium leading-6 text-gray-900">
+                                <label htmlFor="passwordConfirm"
+                                       className="block text-sm font-medium leading-6 text-gray-900">
                                     Password Confirmation
                                 </label>
                                 <div className="mt-2">
@@ -209,8 +194,8 @@ const RegisterPage = () => {
                                 </div>
                             </div>
 
-                            <ClassSelectBox onChange={classSelectHandler} />
-                            <CountrySelectBox onChange={countrySelectHandler} />
+                            <ClassSelectBox onChange={classSelectHandler}/>
+                            <CountrySelectBox onChange={countrySelectHandler}/>
 
                             <div>
                                 <button
@@ -230,7 +215,7 @@ const RegisterPage = () => {
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Already a member?{' '}
                         <Link to="/auth/login"
-                            className="font-semibold leading-6 text-AAPrimary hover:text-AAPrimaryLight">
+                              className="font-semibold leading-6 text-AAPrimary hover:text-AAPrimaryLight">
                             Sign in, Yalla
                         </Link>
                     </p>

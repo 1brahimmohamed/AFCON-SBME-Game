@@ -102,6 +102,27 @@ export const getTodayMatches = asyncErrorCatching(async (req: Request, res: Resp
         })
 })
 
+export const editMatchTime = asyncErrorCatching(async (req: Request, res: Response, next: NextFunction) => {
+    const matches = await Match.find();
+
+    for (let match of matches) {
+        if (match.startTime) {
+            const oldStartTime = new Date(match.startTime);
+            const newStartTime = new Date(oldStartTime.getTime() - 60 * 60 * 1000); // Subtract 1 hour
+
+            await Match.updateOne(
+                { _id: match._id },
+                { $set: { startTime: newStartTime } }
+            );
+
+            console.log(`Updated match ${match._id}: ${oldStartTime} -> ${newStartTime}`);
+        }
+    }
+
+    res.send('Start times updated successfully.');
+});
+
+
 
 export default {
     getMatch,
@@ -109,5 +130,6 @@ export default {
     createMatch,
     updateMatch,
     deleteMatch,
-    getTodayMatches
+    getTodayMatches,
+    editMatchTime
 }

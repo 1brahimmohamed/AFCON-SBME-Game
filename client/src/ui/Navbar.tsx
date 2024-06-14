@@ -12,6 +12,7 @@ const navigation = [
     {name: 'All Matches', href: '/all-matches'},
     {name: 'Leaderboards', href: '/leaderboards'},
     {name: 'Rules', href: '/rules'},
+    {name: 'Hall of Fame', href: '/hall-of-fame'},
 ]
 
 const Navbar = () => {
@@ -34,12 +35,12 @@ const Navbar = () => {
         <header className={`${location === '/' ? "absolute" : "bg-AAPrimaryDark mb-10"} inset-x-0 top-0 z-50`}>
             <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
-                    <Link to="/" className="-m-1.5 p-1.5">
+                    <Link to="/" className="-m-1.5 p-1">
                         <span className="sr-only">SBME CAN 2024</span>
                         <img
-                            className="h-10 w-auto"
-                            src="https://i.postimg.cc/5tHHf2tz/LOGOW.png"
-                            alt=""
+                            className="h-14 w-auto"
+                            src="/logo.png"
+                            alt="logo"
                         />
                     </Link>
                 </div>
@@ -65,7 +66,7 @@ const Navbar = () => {
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end text-sm font-semibold leading-6 text-white">
                     {
-                        isAuthenticated() ? (
+                        isAuthenticated ? (
                             <button onClick={logoutHandler} className={"hover:text-AASecondary"}>
                                 Logout
                             </button>
@@ -92,11 +93,11 @@ const Navbar = () => {
                     className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-AAPrimaryDark px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
                     <div className="flex items-center justify-between">
                         <Link to="/" className="-m-1.5 p-1.5">
-                            <span className="sr-only">Your Company</span>
+                            <span className="sr-only">EMBS</span>
                             <img
-                                className="h-8 w-auto"
-                                src="https://i.postimg.cc/5tHHf2tz/LOGOW.png"
-                                alt=""
+                                className="h-14 w-auto"
+                                src="/logo.png"
+                                alt="logo"
                             />
                         </Link>
                         <button
@@ -111,7 +112,7 @@ const Navbar = () => {
 
                     <div className="mt-6 flow-root">
                         {
-                            isAuthenticated() &&
+                            isAuthenticated &&
                             (
                                 <div
                                     className="-mx-3 block space-y-5 rounded-lg px-3 py-3 font-bold leading-7 text-white"
@@ -139,7 +140,7 @@ const Navbar = () => {
                             </div>
                             <div className="py-6">
                                 {
-                                    isAuthenticated() ? (
+                                    isAuthenticated ? (
                                         <button
                                             onClick={logoutHandler}
                                             className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-800"

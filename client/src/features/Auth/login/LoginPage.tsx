@@ -2,9 +2,8 @@ import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import {login} from "../../../services/apiAuth";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
+import toast from 'react-hot-toast';
 
 
 export default function LoginPage() {
@@ -37,12 +36,9 @@ export default function LoginPage() {
         event.preventDefault();
 
         if (formData.email === '' || formData.password === '') {
-            withReactContent(Swal).fire({
-                text: "Please fill all the fields!",
-                icon: "error",
-                confirmButtonColor: "#fa0505",
-                timer: 1500
-            })
+            toast.error(
+                'Please fill all the fields!', {duration: 4000, position: 'bottom-center'}
+            );
             return;
         }
 
@@ -63,32 +59,25 @@ export default function LoginPage() {
                 })
             ) {
 
-                // fire swal and redirect
-                withReactContent(Swal).fire({
-                    text: "Login Successful!",
-                    icon: "success",
-                    confirmButtonColor: "#002c1e",
-                    timer: 1500
-                })
+                toast.success(
+                    'Login Successful!', {duration: 2000}
+                );
 
                 setTimeout(() => {
                     navigate('/today-matches');
-                }, 2000)
+                }, 2500)
             }
         } else {
-            withReactContent(Swal).fire({
-                text: res.message,
-                icon: "error",
-                confirmButtonColor: "#fa0505",
-                timer: 1500
-            })
+            toast.error(
+                res.message, {duration: 4000, position: 'bottom-center'}
+            );
         }
     };
 
     const isAuthenticated = useIsAuthenticated();
 
     useEffect(() => {
-        if (isAuthenticated()) {
+        if (isAuthenticated) {
             navigate('/');
         }
     }, []);
@@ -101,7 +90,7 @@ export default function LoginPage() {
                     <Link to="/">
                         <img
                             className="mx-auto h-14 w-auto"
-                            src="https://i.postimg.cc/rmjPmKvg/LOGO.png"
+                            src="/color.png"
                             alt="SBME CAN 2024"
                         />
                     </Link>
@@ -154,7 +143,8 @@ export default function LoginPage() {
                                 </div>
 
                                 <div className="text-sm leading-6">
-                                    <Link to="/auth/forget-password" className="font-semibold text-AAPrimary hover:text-AAPrimaryLight">
+                                    <Link to="/auth/forget-password"
+                                          className="font-semibold text-AAPrimary hover:text-AAPrimaryLight">
                                         Forgot password?
                                     </Link>
                                 </div>
@@ -189,7 +179,7 @@ export default function LoginPage() {
                         Sponsored by
                     </h6>
                     <Link to={"https://edu.ieee.org/eg-cu-embs/"} target={"_blank"}>
-                    <img
+                        <img
                             className="mx-auto h-8 w-auto"
                             src="https://i.postimg.cc/Dycj2J3N/3rd.png"
                             alt="SBME CAN 2024"

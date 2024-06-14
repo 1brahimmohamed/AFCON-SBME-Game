@@ -1,8 +1,7 @@
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import { forgotPassword } from "../../../services/apiAuth";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import {forgotPassword} from "../../../services/apiAuth";
+import toast from "react-hot-toast";
 
 const ForgetPasswordPage = () => {
 
@@ -27,12 +26,7 @@ const ForgetPasswordPage = () => {
         event.preventDefault();
 
         if (formData.email === '') {
-            withReactContent(Swal).fire({
-                text: "Please fill the email!",
-                icon: "error",
-                confirmButtonColor: "#fa0505",
-                timer: 1500
-            })
+            toast.error("Please fill the email!", {duration: 1500})
             return;
         }
 
@@ -44,24 +38,14 @@ const ForgetPasswordPage = () => {
 
         if (res.status === "success") {
 
-            // fire swal and redirect
-            withReactContent(Swal).fire({
-                text: "Check your email",
-                icon: "success",
-                confirmButtonColor: "#002c1e",
-                timer: 1500
-            })
-
+            // fire toast and redirect
+            toast.success("Check your email", {duration: 1500})
             setTimeout(() => {
                 navigate('/');
             }, 2000)
+
         } else {
-            withReactContent(Swal).fire({
-                text: res.message,
-                icon: "error",
-                confirmButtonColor: "#fa0505",
-                timer: 1500
-            })
+            toast.error(res.message, {duration: 1500})
         }
     }
 

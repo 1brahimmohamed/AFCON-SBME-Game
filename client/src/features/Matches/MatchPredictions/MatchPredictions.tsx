@@ -2,15 +2,30 @@ import MatchPeople from './MatchPeople'
 import MatchPieChart from './MatchPieChart'
 import MatchStats from './MatchStats'
 import {getMatchPrediction} from '../../../services/apiPrediction.ts'
-import {useLoaderData} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import Loading from "../../../ui/Loading.tsx";
+import {useParams} from 'react-router-dom';
 
 const MatchPredictions = () => {
 
-    const prediction: any = useLoaderData();
+    const {slug} = useParams<{ slug: string }>();
 
-    const data = prediction.data.data
+    const {data: prediction, isLoading, isLoadingError} = useQuery({
+        queryKey: [`match-${slug}`],
+        queryFn: () => getMatchPrediction(slug || ''),
+    });
 
-    const {teamA, teamB, draw, teams} = data
+    if (isLoading) {
+        return <Loading/>;
+    }
+
+    if (isLoadingError) {
+        throw new Error('Something went wrong .. Please try again later');
+    }
+
+    console.log(prediction)
+
+    const {teamA, teamB, draw, teams} = prediction.data
 
     const total = teamA.count + teamB.count + draw.count
 
@@ -41,7 +56,7 @@ const MatchPredictions = () => {
     return (
         <div>
             {
-                prediction.data.results > 0 ? (
+                prediction.results > 0 ? (
                     <>
                         <div className='flex-col space-y-5'>
                             <div className='flex justify-center items-center'>
@@ -69,16 +84,4 @@ const MatchPredictions = () => {
     )
 }
 
-export const loader = async ({params}: { params: any }) => {
-    const {slug} = params
-    const resp = await getMatchPrediction(slug)
-
-    if (resp.status === "success") {
-        return resp
-    }
-    else if (resp.status === "error" && resp.message === "You can not get Predictions until match starts") {
-        console.log(resp)
-        throw new Error(resp.message)
-    }
-}
 export default MatchPredictions

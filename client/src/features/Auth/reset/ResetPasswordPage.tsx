@@ -1,8 +1,7 @@
 import {useState} from "react";
 import {Link, useLoaderData, useNavigate} from "react-router-dom";
 import {checkIfResetTokenExists, resetPassword} from "../../../services/apiAuth";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import toast from "react-hot-toast";
 
 const ResetPasswordPage = () => {
 
@@ -40,12 +39,7 @@ const ResetPasswordPage = () => {
         event.preventDefault();
 
         if (formData.password === '' || formData.passwordConfirm === '') {
-            withReactContent(Swal).fire({
-                text: "Please fill all fields!",
-                icon: "error",
-                confirmButtonColor: "#fa0505",
-                timer: 1500
-            })
+            toast.error("Please fill all fields!", {duration: 1500});
             return;
         }
 
@@ -57,24 +51,13 @@ const ResetPasswordPage = () => {
 
         if (res.status === "success") {
 
-            // fire swal and redirect
-            withReactContent(Swal).fire({
-                text: res.message,
-                icon: "success",
-                confirmButtonColor: "#002c1e",
-                timer: 1500
-            })
+            toast.success("Redirecting to login page", {duration: 1500})
 
             setTimeout(() => {
                 navigate('/auth/login');
             }, 2000)
         } else {
-            withReactContent(Swal).fire({
-                text: res.message,
-                icon: "error",
-                confirmButtonColor: "#fa0505",
-                timer: 1500
-            })
+            toast.error(res.message, {duration: 1500});
         }
     }
 

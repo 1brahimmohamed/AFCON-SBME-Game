@@ -43,7 +43,7 @@ const login = asyncErrorCatching(async (req: Request, res: Response, next: NextF
             });
     }
 
-    const user = await User.findOne({email}).select('+password');
+    const user = await User.findOne({email: email.toLowerCase()}).select('+password');
 
     if (!user) {
         return next(new errorHandler('Invalid credentials', 404));
@@ -167,7 +167,7 @@ const forgotPassword = asyncErrorCatching(async (req: Request, res: Response, ne
 
     const {email} = req.body;
 
-    const user = await User.findOne({email});
+    const user = await User.findOne({email: email.toLowerCase()});
 
     if (!user) return next(new errorHandler('There is no user with email address.', 404));
 

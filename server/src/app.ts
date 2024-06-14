@@ -33,7 +33,7 @@ const corsOptions: cors.CorsOptions = {
     ],
     optionsSuccessStatus: 200,
     credentials: true,
-    origin: process.env.ALLOWED_ORIGIN,
+    origin: "*",
     methods: ['GET','HEAD','OPTIONS','PUT','PATCH','POST','DELETE'],
 };
 
@@ -83,6 +83,13 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/match", matchRouter);
 app.use("/api/v1/prediction", predictionRouter);
 app.use("/api/v1/game", gameRouter);
+app.get("/api/v1/cron", (req: Request, res: Response) => {
+    res.status(200).json({
+        status: 'success',
+        message: 'Cron Job is running'
+    });
+    console.log('Cron Job is running');
+});
 
 app.options('*', cors(corsOptions));
 
