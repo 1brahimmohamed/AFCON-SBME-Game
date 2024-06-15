@@ -105,7 +105,7 @@ export const updateWinner = async (id: string, winner: string) => {
 
 export const resolveScoreAfterMatch = async (id: string) => {
     try {
-        const res = await axios.post(`${API_URL}/game/update-score/${id}`, {
+        const res = await axios.post(`${API_URL}/game/update-score/${id}`, {},{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('_auth')}`
             }
