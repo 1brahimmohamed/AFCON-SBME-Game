@@ -22,6 +22,12 @@ import TokenError from "./ui/TokenError.tsx";
 import HallOfFame from "./ui/HallOfFame.tsx";
 
 import AuthOutlet from '@auth-kit/react-router/AuthOutlet';
+import AdminLayout from "./ui/layouts/AdminLayout.tsx";
+import AdminMatches from "./features/Admin/Matches/AdminMatches.tsx";
+import AdminUsers from "./features/Admin/Users/AdminUsers.tsx";
+import AdminUser from "./features/Admin/Users/AdminUser.tsx";
+import AdminMatch from "./features/Admin/Matches/AdminMatch.tsx";
+import ProtectedAdminRoute from "./features/Admin/Shared/ProtectedAdminRoutes.tsx";
 
 
 const router = createBrowserRouter([
@@ -69,6 +75,40 @@ const router = createBrowserRouter([
                         element: <MatchPredictions/>,
                     },
                 ],
+            }
+        ]
+    },
+
+    {
+        path: '/eur-admin',
+        element: <ProtectedAdminRoute fallbackPath={'/auth/login'} />,
+        children: [
+            {
+                element: <AdminLayout/>,
+                errorElement: <Error/>,
+                children: [
+                    {
+                        index: true,
+                        element: <div>Welcome Admin</div>
+                    },
+                    {
+                        path: 'matches',
+                        element: <AdminMatches />,
+                    },
+                    {
+                        path: 'matches/:id',
+                        element: <AdminMatch />,
+                    },
+                    {
+                        path: 'users',
+                        element: <AdminUsers />,
+                    },
+                    {
+                        path: 'users/:id',
+                        element: <AdminUser />,
+                    }
+
+                ]
             }
         ]
     },
