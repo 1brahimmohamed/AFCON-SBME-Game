@@ -1,4 +1,4 @@
-# SBME AFCON/SBME Prediction Game
+# SBME AFCON/EURO Prediction Game
 
 ### Table of Contents
 
