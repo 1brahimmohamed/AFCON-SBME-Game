@@ -97,9 +97,14 @@ You can run the project locally by following these steps:
 4.Enjoy!
 
 ### Screenshots
+#### User pages
 
-![img.png](img.png)
-![img_1.png](img_1.png)
+![img.png](images/user.img.png)
+![img_1.png](images/user.img2.png)
+
+#### Admin pages
+![img.png](images/admin.img.png)
+![img_1.png](images/admin.img2.png)
 
 ### Documentations
 API Documentation is available at [Postman](https://documenter.getpostman.com/view/21802740/2sAXqnePeY)
