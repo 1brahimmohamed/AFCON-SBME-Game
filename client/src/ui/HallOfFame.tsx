@@ -29,6 +29,21 @@ const people = [
         role: 'AFCON 2023 3rd Place 🥉',
         imageUrl: '/hof/abram.jpg',
     },
+    {
+        name: 'Hesham Tamer',
+        role: 'EURO 2024 Winner 🏆',
+        imageUrl: '/hof/hesham.jpg',
+    },
+    {
+        name: 'Yehia Said',
+        role: 'EURO 2024 Runner-Up 🥈',
+        imageUrl: '/hof/yehia.jpg',
+    },
+    {
+        name: 'Omar Adel',
+        role: 'EURO 2024 3rd Place 🥉',
+        imageUrl: '/hof/ava.webp',
+    },
 
 
 ]
